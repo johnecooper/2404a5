@@ -119,12 +119,21 @@ GradAppFormUI::GradAppFormUI(Manager* aManager, int prev, GradApp* gApp, bool aB
     emailDomain = text.substr(text.find("@"));
 
     emailEntry.set_text(emailName);
-    if (emailDomain == "@cmail.carleton.ca")
+    if (emailDomain == "@cmail.carleton.ca"){
       emailCombo.set_active(0);
-    else
+      if(beingViewed) emailCombo.remove_text(1);
+    }
+    else{
       emailCombo.set_active(1);
-
+      if(beingViewed) emailCombo.remove_text(0);
+    }
+  
     aResearch = app->getGrad()->getResearch();
+   if(beingViewed){
+       researchCombo.remove_all();
+       researchCombo.append(aResearch);
+    }
+
     for (i=0; i<count; i++) {
        if (research[i] == aResearch) {
          researchCombo.set_active(i);
@@ -138,6 +147,10 @@ GradAppFormUI::GradAppFormUI(Manager* aManager, int prev, GradApp* gApp, bool aB
       m_rb2.set_active();
 
     aSuper = app->getGrad()->getSupervisor();
+    if(beingViewed){
+      superCombo.remove_all();
+      superCombo.append(aSuper);
+    }
     for (i=0; i<count; i++) {
        if (faculty[i] == aSuper) {
          superCombo.set_active(i);
@@ -166,13 +179,23 @@ GradAppFormUI::GradAppFormUI(Manager* aManager, int prev, GradApp* gApp, bool aB
   appTable.attach(m_rb2, 2 , 3, 7, 8);
   if (prevWin == 2) {
     appTable.attach(cancelButton, 1, 2, 10, 11);
+
+  if(!beingViewed)
     appTable.attach(saveButton, 2, 3, 10, 11);
+
   }
   else {
     appTable.attach(backButton, 1, 2, 10, 11);
     appTable.attach(nextButton, 2, 3, 10, 11);
   }
   scrolledWindow.add(appTable);
+
+  if(beingViewed){
+    stuNumEntry.set_editable(false);
+    nameEntry.set_editable(false);
+    surnameEntry.set_editable(false);
+    emailEntry.set_editable(false);
+  }
 
   // Widget action listeners
   backButton.signal_clicked().connect(
@@ -282,7 +305,7 @@ void GradAppFormUI::on_nextButton(const Glib::ustring& data) {
                           researchCombo.get_active_text(),
                           program,
                           superCombo.get_active_text() );
-    TACourseInfoUI* taCrsInfoWin = new TACourseInfoUI(manager, 0, 1, app, 0);
+    TACourseInfoUI* taCrsInfoWin = new TACourseInfoUI(manager, 0, 1, app, 0, beingViewed);
     taCrsInfoWin->show();  
     hide();
   }

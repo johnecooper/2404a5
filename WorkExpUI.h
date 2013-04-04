@@ -12,8 +12,8 @@
 
 class WorkExpUI : public Gtk::Window {
   public:
-    WorkExpUI(Manager*, int, int, UGradApp*, WorkExp*);
-    WorkExpUI(Manager*, int, int, GradApp*, WorkExp*);
+    WorkExpUI(Manager*, int, int, UGradApp*, WorkExp*,bool);
+    WorkExpUI(Manager*, int, int, GradApp*, WorkExp*,bool);
     ~WorkExpUI();
 
     Manager*     manager;
@@ -50,6 +50,7 @@ class WorkExpUI : public Gtk::Window {
     GradApp*  gApp;
     WorkExp*  work;
     bool      addWork;
+    bool beingViewed;
 };
 
 #endif

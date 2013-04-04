@@ -16,7 +16,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // Constructor
-WorkExpUI::WorkExpUI(Manager* aManager, int prev, int type, UGradApp* app, WorkExp* w) 
+WorkExpUI::WorkExpUI(Manager* aManager, int prev, int type, UGradApp* app, WorkExp* w, bool aBeingViewed) 
 : createTable(7, 4, false),
   aLabel("Please fill in the information about your work experience"),
   respLabel("Responsibilities:"), 
@@ -32,6 +32,7 @@ WorkExpUI::WorkExpUI(Manager* aManager, int prev, int type, UGradApp* app, WorkE
   uApp(app),
   gApp(0)
 {
+  beingViewed = aBeingViewed;
   manager = aManager;
   prevWin = prev;
   stuType = type;
@@ -48,7 +49,7 @@ WorkExpUI::WorkExpUI(Manager* aManager, int prev, int type, UGradApp* app, WorkE
 
 //////////////////////////////////////////////////////////////////////////
 // Constructor
-WorkExpUI::WorkExpUI(Manager* aManager, int prev, int type, GradApp* app, WorkExp* w) 
+WorkExpUI::WorkExpUI(Manager* aManager, int prev, int type, GradApp* app, WorkExp* w, bool aBeingViewed) 
 : createTable(7, 4, false),
   aLabel("Please fill in the information about your work experience"),
   respLabel("Responsibilities:"), 
@@ -64,6 +65,7 @@ WorkExpUI::WorkExpUI(Manager* aManager, int prev, int type, GradApp* app, WorkEx
   uApp(0),
   gApp(app)
 {
+  beingViewed = aBeingViewed;
   manager = aManager;
   prevWin = prev;
   stuType = type;
@@ -179,7 +181,8 @@ void WorkExpUI::initialize() {
   }
   else {
     createTable.attach(cancelButton, 0, 2, 6, 7, Gtk::FILL,Gtk::FILL,5, 50);
-    createTable.attach(saveButton, 2, 4, 6, 7,Gtk::FILL,Gtk::FILL,5, 50);
+    if(!beingViewed)
+      createTable.attach(saveButton, 2, 4, 6, 7,Gtk::FILL,Gtk::FILL,5, 50);
   }
 
   nextButton.signal_clicked().connect(
@@ -194,7 +197,9 @@ void WorkExpUI::initialize() {
     sigc::bind<Glib::ustring>( sigc::mem_fun(*this, &WorkExpUI::on_cancelButton), "Cancel") );
   saveButton.signal_clicked().connect(
     sigc::bind<Glib::ustring>( sigc::mem_fun(*this, &WorkExpUI::on_saveButton), "Save") );
-
+  
+  if(beingViewed)
+    respEntry.set_editable(false);
 
   show_all_children();
   //cout << "CONSTRUCT WorkExpUI" << endl;
@@ -211,39 +216,72 @@ void WorkExpUI::setWidgets(){
 
   // Duration Widget
   text = work->getDuration();
-  for (i=0; i<MAX_BUF; i++){
-    if(duration[i] == text) {
-      monthCombo.set_active(i);
-      break;
+   if(beingViewed){
+    monthCombo.remove_all();
+    monthCombo.append(text);
+    monthCombo.set_active(0);
+  }
+  else{
+    for (i=0; i<MAX_BUF; i++){
+      if(duration[i] == text) {
+        monthCombo.set_active(i);
+        break;
+      }
     }
   }
-
   // Start date Widgets
   text = work->getStart();
   d = text.substr(0, 2);
   m = text.substr(3, 2);
   y = text.substr(6, string::npos);
-  for (i=0; i<MAX_BUF; i++){
-    if(day[i] == d)
-      day1Combo.set_active(i);
-    if(month[i] == m)
-      month1Combo.set_active(i);
-    if(year[i] == y)
-      year1Combo.set_active(i);
+  if(beingViewed){
+    day1Combo.remove_all();
+    day1Combo.append(d);
+    day1Combo.set_active(0);
+    month1Combo.remove_all();
+    month1Combo.append(m);
+    month1Combo.set_active(0);
+    year1Combo.remove_all();
+    year1Combo.append(y);
+    year1Combo.set_active(0);
   }
+  else{
+    for (i=0; i<MAX_BUF; i++){
+      if(day[i] == d)
+        day1Combo.set_active(i);
+      if(month[i] == m)
+        month1Combo.set_active(i);
+      if(year[i] == y)
+        year1Combo.set_active(i);
+    }
+  }
+  
 
   // End date Widgets
   text = work->getEnd();
   d = text.substr(0, 2);
   m = text.substr(3, 2);
   y = text.substr(6, string::npos);
-  for (i=0; i<MAX_BUF; i++){
-    if(day[i] == d)
-      day2Combo.set_active(i);
-    if(month[i] == m)
-      month2Combo.set_active(i);
-    if(year[i] == y)
-      year2Combo.set_active(i);
+  if(beingViewed){
+    day2Combo.remove_all();
+    day2Combo.append(d);
+    day2Combo.set_active(0);
+    month2Combo.remove_all();
+    month2Combo.append(m);
+    month2Combo.set_active(0);
+    year2Combo.remove_all();
+    year2Combo.append(y);
+    year2Combo.set_active(0);
+  }
+  else{
+    for (i=0; i<MAX_BUF; i++){
+      if(day[i] == d)
+        day2Combo.set_active(i);
+      if(month[i] == m)
+        month2Combo.set_active(i);
+      if(year[i] == y)
+        year2Combo.set_active(i);
+    }
   }
 }
 
@@ -279,9 +317,9 @@ void WorkExpUI::on_nextOrOtherButton(const Glib::ustring& data){
     }
     else if (data == "Other Work") {
       if (uApp != 0)
-        workWin = new WorkExpUI(manager, 2, 0, uApp, 0); 
+        workWin = new WorkExpUI(manager, 2, 0, uApp, 0, beingViewed); 
       else
-        workWin = new WorkExpUI(manager, 2, 1, gApp, 0); 
+        workWin = new WorkExpUI(manager, 2, 1, gApp, 0, beingViewed); 
       workWin->show();
     }
     delete this;
@@ -303,12 +341,12 @@ void WorkExpUI::on_backButton(const Glib::ustring& data){
   if (uApp != 0) {
     if (!(uApp->getTACrsQueue()->empty()));
       uApp->getTACrsQueue()->clear();
-    taCrsInfoWin = new TACourseInfoUI(manager, 4, 0, uApp, 0); 
+    taCrsInfoWin = new TACourseInfoUI(manager, 4, 0, uApp, 0, beingViewed); 
   }
   else {
     if (!(gApp->getTACrsQueue()->empty()));
       gApp->getTACrsQueue()->clear();
-    taCrsInfoWin = new TACourseInfoUI(manager, 4, 1, gApp, 0); 
+    taCrsInfoWin = new TACourseInfoUI(manager, 4, 1, gApp, 0, beingViewed); 
   }
   taCrsInfoWin->show();  
   delete this;
@@ -320,9 +358,9 @@ void WorkExpUI::on_cancelButton(const Glib::ustring& data){
   SelectEntryUI* selectEntryWin;
 
   if (uApp != 0)
-    selectEntryWin = new SelectEntryUI(manager, 2, 0, uApp->getAppNum(), false);
+    selectEntryWin = new SelectEntryUI(manager, 2, 0, uApp->getAppNum(), beingViewed);
   else 
-    selectEntryWin = new SelectEntryUI(manager, 2, 1, gApp->getAppNum(), false);
+    selectEntryWin = new SelectEntryUI(manager, 2, 1, gApp->getAppNum(), beingViewed);
   selectEntryWin->show();
   delete this;
 }

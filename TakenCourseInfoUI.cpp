@@ -15,7 +15,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // Constructor
-TakenCourseInfoUI::TakenCourseInfoUI(Manager* aManager, int prev, int type, UGradApp* app, TakenCourse* t)
+TakenCourseInfoUI::TakenCourseInfoUI(Manager* aManager, int prev, int type, UGradApp* app, TakenCourse* t, bool aBeingViewed)
 : CourseInfoUI(aManager, prev, type, app),
   nextButton("Next"),
   courseButton("New Course"),
@@ -23,6 +23,7 @@ TakenCourseInfoUI::TakenCourseInfoUI(Manager* aManager, int prev, int type, UGra
   cancelButton("Cancel"),
   saveButton("Save")
 {
+  beingViewed = aBeingViewed;
   manager = aManager;
   if (t) { // If a TakenCourse was passed in, assign it to taken
     taken = t;  
@@ -54,7 +55,8 @@ TakenCourseInfoUI::TakenCourseInfoUI(Manager* aManager, int prev, int type, UGra
   }
   else {
     createTable.attach(cancelButton, 0, 1, 4, 5, Gtk::FILL,Gtk::FILL,5, 50); 
-    createTable.attach(saveButton, 2, 3, 4, 5, Gtk::FILL,Gtk::FILL,5, 50); 
+    if(!beingViewed)
+      createTable.attach(saveButton, 2, 3, 4, 5, Gtk::FILL,Gtk::FILL,5, 50); 
   }
 
   nextButton.signal_clicked().connect(
@@ -87,6 +89,10 @@ void TakenCourseInfoUI::setWidgets(){
 
   text = taken->getName();
   CourseQueue::Node* currNode = manager->getCourseQueue()->front();
+  if(beingViewed){
+    courseCombo.remove_all();
+    courseCombo.append(text);
+  }
   while (currNode != 0){ 
     if (currNode->data->getName() == text) {
       courseCombo.set_active(i);
@@ -97,6 +103,10 @@ void TakenCourseInfoUI::setWidgets(){
   }
 
   text = taken->getTerm();
+  if(beingViewed){
+      termCombo.remove_all();
+      termCombo.append(text);
+    }
   for (i=0; i<MAX_BUF; i++){
     if(term[i] == text) {
       termCombo.set_active(i);
@@ -105,6 +115,10 @@ void TakenCourseInfoUI::setWidgets(){
   }
 
   text = taken->getYear();
+  if(beingViewed){
+    yearCombo.remove_all();
+    yearCombo.append(text);
+  }
   for (i=0; i<MAX_BUF; i++){
     if(year[i] == text) {
       yearCombo.set_active(i);
@@ -113,11 +127,20 @@ void TakenCourseInfoUI::setWidgets(){
   }
 
   text = taken->getFinalGrade();
+  if(beingViewed){
+      finalCombo.remove_all();
+      finalCombo.append(text);
+    }
   for (i=0; i<MAX_BUF; i++){
     if(final[i] == text) {
       finalCombo.set_active(i);
       break;
     }
+  }
+  if(beingViewed){
+    termCombo.set_active(0);
+    yearCombo.set_active(0);
+    finalCombo.set_active(0);
   }
 }
 
@@ -127,7 +150,7 @@ void TakenCourseInfoUI::on_nextButton(const Glib::ustring& data){
   taken->setName(courseCombo.get_active_text());
   taken->setDataMembers(termCombo.get_active_text(), yearCombo.get_active_text(), finalCombo.get_active_text());
   uApp->getTakenCrsQueue()->pushBack(taken);    
-  TACourseInfoUI* taCrsInfoWin = new TACourseInfoUI(manager, 1, 0, uApp, 0); 
+  TACourseInfoUI* taCrsInfoWin = new TACourseInfoUI(manager, 1, 0, uApp, 0, beingViewed); 
   taCrsInfoWin->show();
   delete this;
 }
@@ -140,7 +163,7 @@ void TakenCourseInfoUI::on_backButton(const Glib::ustring& data){
     if (!(uApp->getTakenCrsQueue()->empty()));
       uApp->getTakenCrsQueue()->clear();
     manager->cancelApp();
-    StuAppFormUI* stuFormWin = new StuAppFormUI(manager, 1, 0, false);
+    StuAppFormUI* stuFormWin = new StuAppFormUI(manager, 1, 0,  beingViewed);
     stuFormWin->show();
     delete this;
   }
@@ -153,7 +176,7 @@ void TakenCourseInfoUI::on_courseButton(const Glib::ustring& data){
   taken->setDataMembers(termCombo.get_active_text(), yearCombo.get_active_text(), finalCombo.get_active_text());
   uApp->getTakenCrsQueue()->pushBack(taken);
 
-  TakenCourseInfoUI* takenCrsInfoWin = new TakenCourseInfoUI(manager, 1, 0, uApp, 0);
+  TakenCourseInfoUI* takenCrsInfoWin = new TakenCourseInfoUI(manager, 1, 0, uApp, 0, beingViewed);
   takenCrsInfoWin->show();
   delete this;
 }
@@ -161,7 +184,7 @@ void TakenCourseInfoUI::on_courseButton(const Glib::ustring& data){
 //////////////////////////////////////////////////////////////////////////
 // Event handler of cancel button
 void TakenCourseInfoUI::on_cancelButton(const Glib::ustring& data){
-  SelectEntryUI* selectEntryWin = new SelectEntryUI(manager, 0, 0, uApp->getAppNum(), false);
+  SelectEntryUI* selectEntryWin = new SelectEntryUI(manager, 0, 0, uApp->getAppNum(), beingViewed);
   selectEntryWin->show();
   delete this;
 }

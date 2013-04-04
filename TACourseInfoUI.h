@@ -12,8 +12,8 @@
 
 class TACourseInfoUI : public CourseInfoUI {
   public:
-    TACourseInfoUI(Manager*, int, int, UGradApp*, TACourse*);
-    TACourseInfoUI(Manager*, int, int, GradApp*, TACourse*);
+    TACourseInfoUI(Manager*, int, int, UGradApp*, TACourse*, bool);
+    TACourseInfoUI(Manager*, int, int, GradApp*, TACourse*, bool);
     ~TACourseInfoUI();
 
     Manager*  manager;
@@ -32,6 +32,7 @@ class TACourseInfoUI : public CourseInfoUI {
     string    faculty[MAX_BUF];
     TACourse* ta;
     bool      addCrs;
+    bool      beingViewed;
 };
 
 #endif

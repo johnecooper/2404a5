@@ -12,7 +12,7 @@
 
 class TakenCourseInfoUI : public CourseInfoUI {
   public:
-    TakenCourseInfoUI(Manager*, int, int, UGradApp*, TakenCourse*);
+    TakenCourseInfoUI(Manager*, int, int, UGradApp*, TakenCourse*,bool);
     ~TakenCourseInfoUI();
 
   private:
@@ -28,6 +28,7 @@ class TakenCourseInfoUI : public CourseInfoUI {
     string       final[MAX_BUF];
     TakenCourse* taken;
     bool         addCrs;
+    bool         beingViewed;
 };
 
 #endif

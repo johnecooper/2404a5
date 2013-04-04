@@ -38,7 +38,6 @@ SelectEditUI::SelectEditUI(Manager* aManager, int type, int app, bool aBeingView
   stuType = type;
   appNum  = app;
   beingViewed = aBeingViewed;
-
   set_default_size(500, 700);
   set_title("cuTAES");
   set_modal(true);
@@ -75,7 +74,8 @@ SelectEditUI::SelectEditUI(Manager* aManager, int type, int app, bool aBeingView
   aTable.attach(l4, 0, 6, 8, 9,Gtk::FILL,Gtk::FILL,15,0);
   aTable.attach(s4, 0, 4, 9, 10);
   aTable.attach(e4, 4, 6, 9, 10,Gtk::FILL,Gtk::SHRINK,15,0);
-  aTable.attach(cancelButton, 0, 2, 10, 11, Gtk::FILL,Gtk::FILL, 20, 20);
+  if(!beingViewed)
+    aTable.attach(cancelButton, 0, 2, 10, 11, Gtk::FILL,Gtk::FILL, 20, 20);
   aTable.attach(doneButton, 2, 6, 10, 11, Gtk::FILL, Gtk::FILL, 20, 20);
 
   cancelButton.signal_clicked().connect(
@@ -153,11 +153,11 @@ void SelectEditUI::on_editEntryButton(const Glib::ustring& data) {
   SelectEntryUI* selectEntryWin;
   
   if (data =="taken")
-    selectEntryWin = new SelectEntryUI(manager, 0, beingViewedStuType, appNum, beingViewed);
+    selectEntryWin = new SelectEntryUI(manager, 0, 0, appNum, beingViewed);
   else if (data == "ta")
-    selectEntryWin = new SelectEntryUI(manager, 1, beingViewedStuType, appNum, beingViewed);
+    selectEntryWin = new SelectEntryUI(manager, 1, 0, appNum, beingViewed);
   else
-    selectEntryWin = new SelectEntryUI(manager, 2, beingViewedStuType, appNum, beingViewed);
+    selectEntryWin = new SelectEntryUI(manager, 2, 0, appNum, beingViewed);
 
   selectEntryWin->show();
   delete this;

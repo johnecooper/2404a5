@@ -78,8 +78,11 @@ SelectEntryUI::SelectEntryUI(Manager* aManager, int entity, int type, int app, b
 
   aTable.attach(aLabel, 0, 4, 0, 1,Gtk::FILL,Gtk::FILL,0,10);
   aTable.attach(scrolledWindow, 0, 4, 1, 2);
-  aTable.attach(removeButton, 0, 1, 2, 3,Gtk::FILL,Gtk::FILL,0,10);
-  aTable.attach(addButton, 1, 2, 2, 3,Gtk::FILL,Gtk::FILL,0,10);
+
+  if(!beingViewed){
+    aTable.attach(removeButton, 0, 1, 2, 3,Gtk::FILL,Gtk::FILL,0,10);
+    aTable.attach(addButton, 1, 2, 2, 3,Gtk::FILL,Gtk::FILL,0,10);
+  }
   aTable.attach(editButton, 2, 3, 2, 3,Gtk::FILL,Gtk::FILL,0,10);
   aTable.attach(doneButton, 3, 4, 2, 3,Gtk::FILL,Gtk::FILL,0,10);
 
@@ -169,31 +172,31 @@ void SelectEntryUI::on_addButton(const Glib::ustring& data){
   switch (entityType) {
     case 0: // Taken Course
       if (stuType == 0) {
-        takenCrsInfoWin = new TakenCourseInfoUI(manager, 3, 0, uApp, 0);
+        takenCrsInfoWin = new TakenCourseInfoUI(manager, 3, 0, uApp, 0, beingViewed);
         takenCrsInfoWin->show();
         delete this;
       }
       break;
     case 1: // TA'd Course
       if (stuType == 0) {
-        taCrsInfoWin = new TACourseInfoUI(manager, 3, 0, uApp, 0);
+        taCrsInfoWin = new TACourseInfoUI(manager, 3, 0, uApp, 0, beingViewed);
         taCrsInfoWin->show();
         delete this;
       }
       else {
-        taCrsInfoWin = new TACourseInfoUI(manager, 3, 1, gApp, 0);
+        taCrsInfoWin = new TACourseInfoUI(manager, 3, 1, gApp, 0, beingViewed);
         taCrsInfoWin->show();
         delete this;
       }
       break;
     case 2: // Work Exp
       if (stuType == 0) {
-        workExpWin = new WorkExpUI(manager, 1, 0, uApp, 0);
+        workExpWin = new WorkExpUI(manager, 1, 0, uApp, 0, beingViewed);
         workExpWin->show();
         delete this;
       }
       else {
-        workExpWin = new WorkExpUI(manager, 1, 1, gApp, 0);
+        workExpWin = new WorkExpUI(manager, 1, 1, gApp, 0, beingViewed);
         workExpWin->show();
         delete this;
       }
@@ -226,7 +229,7 @@ void SelectEntryUI::on_editButton(const Glib::ustring& data){
                                                                   list.get_text(list.get_selected()[0],1),
                                                                   list.get_text(list.get_selected()[0],2),
                                                                   list.get_text(list.get_selected()[0],3) );
-        takenCrsInfoWin = new TakenCourseInfoUI(manager, 3, 0, uApp, taken);
+        takenCrsInfoWin = new TakenCourseInfoUI(manager, 3, 0, uApp, taken, beingViewed);
         takenCrsInfoWin->show();
         delete this;
       }
@@ -237,7 +240,7 @@ void SelectEntryUI::on_editButton(const Glib::ustring& data){
                                                          list.get_text(list.get_selected()[0],1),
                                                          list.get_text(list.get_selected()[0],2),
                                                          list.get_text(list.get_selected()[0],3) );
-        taCrsInfoWin = new TACourseInfoUI(manager, 3, 0, uApp, ta);
+        taCrsInfoWin = new TACourseInfoUI(manager, 3, 0, uApp, ta,beingViewed);
         taCrsInfoWin->show();
         delete this;
       }
@@ -246,7 +249,7 @@ void SelectEntryUI::on_editButton(const Glib::ustring& data){
                                                          list.get_text(list.get_selected()[0],1),
                                                          list.get_text(list.get_selected()[0],2),
                                                          list.get_text(list.get_selected()[0],3) );
-        taCrsInfoWin = new TACourseInfoUI(manager, 3, 1, gApp, ta);
+        taCrsInfoWin = new TACourseInfoUI(manager, 3, 1, gApp, ta, beingViewed);
         taCrsInfoWin->show();
         delete this;
       }
@@ -257,7 +260,7 @@ void SelectEntryUI::on_editButton(const Glib::ustring& data){
                                                           list.get_text(list.get_selected()[0],1),
                                                           list.get_text(list.get_selected()[0],2),
                                                           list.get_text(list.get_selected()[0],3) );
-        workExpWin = new WorkExpUI(manager, 1, 0, uApp, work);
+        workExpWin = new WorkExpUI(manager, 1, 0, uApp, work, beingViewed);
         workExpWin->show();
         delete this;
       }
@@ -266,7 +269,7 @@ void SelectEntryUI::on_editButton(const Glib::ustring& data){
                                                           list.get_text(list.get_selected()[0],1),
                                                           list.get_text(list.get_selected()[0],2),
                                                           list.get_text(list.get_selected()[0],3) );
-        workExpWin = new WorkExpUI(manager, 1, 0, gApp, work);
+        workExpWin = new WorkExpUI(manager, 1, 0, gApp, work, beingViewed);
         workExpWin->show();
         delete this;
       }

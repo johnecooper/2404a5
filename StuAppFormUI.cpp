@@ -104,12 +104,21 @@ StuAppFormUI::StuAppFormUI(Manager* aManager, int prev, UGradApp* uApp, bool aBe
     emailDomain = text.substr(text.find("@"));
 
     emailEntry.set_text(emailName);
-    if (emailDomain == "@cmail.carleton.ca")
+    if (emailDomain == "@cmail.carleton.ca"){
       emailCombo.set_active(0);
-    else
-      emailCombo.set_active(1);
-
+      if(beingViewed)
+        emailCombo.remove_text(1);
+    }
+    else{
+      emailCombo.set_active(1); 
+      if(beingViewed)
+        emailCombo.remove_text(0);
+    }
     aMajor = app->getUndergrad()->getMajor();
+    if(beingViewed) {
+      majorCombo.remove_all();
+      majorCombo.append(aMajor);
+    }
     for (i=0; i<count; i++) {
        if (majors[i] == aMajor) {
          majorCombo.set_active(i);
@@ -121,6 +130,11 @@ StuAppFormUI::StuAppFormUI(Manager* aManager, int prev, UGradApp* uApp, bool aBe
     mgpaEntry.set_text(Tools::floatToString(app->getUndergrad()->getMGPA()));
   }
   else {
+    emailCombo.set_active(0);
+    majorCombo.set_active(0);
+  }
+  
+  if(beingViewed){
     emailCombo.set_active(0);
     majorCombo.set_active(0);
   }
@@ -141,6 +155,7 @@ StuAppFormUI::StuAppFormUI(Manager* aManager, int prev, UGradApp* uApp, bool aBe
   appTable.attach(mgpaEntry, 1, 3, 9, 10);
   if (prevWin == 2) {
     appTable.attach(cancelButton, 1, 2, 10, 11);
+  if(!beingViewed)
     appTable.attach(saveButton, 2, 3, 10, 11);
   }
   else {
@@ -159,6 +174,19 @@ StuAppFormUI::StuAppFormUI(Manager* aManager, int prev, UGradApp* uApp, bool aBe
   saveButton.signal_clicked().connect(
     sigc::bind<Glib::ustring>( sigc::mem_fun(*this, &StuAppFormUI::on_saveButton), "Save") );
   
+  if(beingViewed){
+    stuNumEntry.set_editable(false);
+    nameEntry.set_editable(false);
+    surnameEntry.set_editable(false);
+    majorEntry.set_editable(false);
+    emailEntry.set_editable(false);
+    yearEntry.set_editable(false);
+    cgpaEntry.set_editable(false);
+    mgpaEntry.set_editable(false);
+  }
+
+
+
   show_all_children();
 
   //cout << "CONSTRUCT StuAppFormUI" << endl;
@@ -255,7 +283,7 @@ void StuAppFormUI::on_nextButton(const Glib::ustring& data) {
                            Tools::stringToInt(yearEntry.get_text()),
                            Tools::stringToFloat(cgpaEntry.get_text()),
                            Tools::stringToFloat(mgpaEntry.get_text()) );
-      TakenCourseInfoUI* takenCrsInfoWin = new TakenCourseInfoUI(manager, 0, 0, app, 0);
+      TakenCourseInfoUI* takenCrsInfoWin = new TakenCourseInfoUI(manager, 0, 0, app, 0, beingViewed);
       takenCrsInfoWin->show();
       hide();
   }

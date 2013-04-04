@@ -17,7 +17,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // Constructor
-TACourseInfoUI::TACourseInfoUI(Manager* aManager, int prev, int type, UGradApp* app, TACourse* t)
+TACourseInfoUI::TACourseInfoUI(Manager* aManager, int prev, int type, UGradApp* app, TACourse* t, bool aBeingViewed)
 : CourseInfoUI(aManager, prev, type, app),
   nextButton("Next"),
   courseButton("New Course"),
@@ -25,6 +25,7 @@ TACourseInfoUI::TACourseInfoUI(Manager* aManager, int prev, int type, UGradApp* 
   cancelButton("Cancel"),
   saveButton("Save")
 {
+  beingViewed = aBeingViewed;
   manager = aManager;
   if (t) { // If a TACourse was passed in, assign it to ta
     ta = t;
@@ -39,7 +40,7 @@ TACourseInfoUI::TACourseInfoUI(Manager* aManager, int prev, int type, UGradApp* 
 
 //////////////////////////////////////////////////////////////////////////
 // Constructor
-TACourseInfoUI::TACourseInfoUI(Manager* aManager, int prev, int type, GradApp* app, TACourse* t)
+TACourseInfoUI::TACourseInfoUI(Manager* aManager, int prev, int type, GradApp* app, TACourse* t, bool aBeingViewed)
 : CourseInfoUI(aManager, prev, type, app),
   nextButton("Next"),
   courseButton("New Course"),
@@ -47,6 +48,7 @@ TACourseInfoUI::TACourseInfoUI(Manager* aManager, int prev, int type, GradApp* a
   cancelButton("Cancel"),
   saveButton("Save")
 {
+  beingViewed = aBeingViewed;
   manager = aManager;
   if (t) { // If a TACourse was passed in, assign it to ta
     ta = t;
@@ -99,7 +101,8 @@ void TACourseInfoUI::initialize() {
   }
   else {
     createTable.attach(cancelButton, 0, 1, 4, 5, Gtk::FILL,Gtk::FILL,5, 50); 
-    createTable.attach(saveButton, 2, 3, 4, 5, Gtk::FILL,Gtk::FILL,5, 50); 
+    if(!beingViewed)
+      createTable.attach(saveButton, 2, 3, 4, 5, Gtk::FILL,Gtk::FILL,5, 50); 
   }
 
   nextButton.signal_clicked().connect(
@@ -125,37 +128,65 @@ void TACourseInfoUI::setWidgets(){
   int i=0;
 
   text = ta->getName();
-  CourseQueue::Node* currNode = manager->getCourseQueue()->front();
-  while (currNode != 0){ 
-    if (currNode->data->getName() == text) {
-      courseCombo.set_active(i);
-      break;
-    }
-    i++;
-    currNode = currNode->next;
+  if(beingViewed){
+    courseCombo.remove_all();
+    courseCombo.append(text);
+    courseCombo.set_active(0);
   }
-
+  else{
+    CourseQueue::Node* currNode = manager->getCourseQueue()->front();
+    while (currNode != 0){ 
+      if (currNode->data->getName() == text) {
+        courseCombo.set_active(i);
+        break;
+      }
+      i++;
+      currNode = currNode->next;
+    }
+  }
+  
   text = ta->getTerm();
-  for (i=0; i<MAX_BUF; i++){
-    if(term[i] == text) {
-      termCombo.set_active(i);
-      break;
+   if(beingViewed){
+    termCombo.remove_all();
+    termCombo.append(text);
+    termCombo.set_active(0);
+  }
+  else{
+    for (i=0; i<MAX_BUF; i++){
+      if(term[i] == text) {
+        termCombo.set_active(i);
+        break;
+      }
     }
   }
-
+  
   text = ta->getYear();
-  for (i=0; i<MAX_BUF; i++){
-    if(year[i] == text) {
-      yearCombo.set_active(i);
-      break;
+   if(beingViewed){
+    yearCombo.remove_all();
+    yearCombo.append(text);
+    yearCombo.set_active(0);
+  }
+  else{
+    for (i=0; i<MAX_BUF; i++){
+      if(year[i] == text) {
+        yearCombo.set_active(i);
+        break;
+      }
     }
   }
 
   text = ta->getSupervisor();
-  for (i=0; i<MAX_BUF; i++){
-    if(faculty[i] == text) {
-      finalCombo.set_active(i);
-      break;
+   if(beingViewed){
+    finalCombo.remove_all();
+    finalCombo.append(text);
+    finalCombo.set_active(0);
+  }
+  else{
+    for (i=0; i<MAX_BUF; i++){
+      if(faculty[i] == text) {
+        finalCombo.set_active(i);
+        break;
+      }
     }
   }
 }
@@ -172,12 +203,12 @@ void TACourseInfoUI::on_nextButton(const Glib::ustring& data){
   if (uApp != 0) {
     if (courseCombo.get_active_text() != "None")
       uApp->getTACrsQueue()->pushBack(ta);
-    workExpWin = new WorkExpUI(manager, 0, 0, uApp, 0);
+    workExpWin = new WorkExpUI(manager, 0, 0, uApp, 0, beingViewed);
   }
   else {
     if (courseCombo.get_active_text() != "None")
       gApp->getTACrsQueue()->pushBack(ta);      
-    workExpWin = new WorkExpUI(manager, 0, 1, gApp, 0);
+    workExpWin = new WorkExpUI(manager, 0, 1, gApp, 0, beingViewed);
   }
 
   workExpWin->show();
@@ -191,7 +222,7 @@ void TACourseInfoUI::on_backButton(const Glib::ustring& data){
   if (uApp != 0) { 
     if (!(uApp->getTACrsQueue()->empty()));
       uApp->getTACrsQueue()->clear();
-    TakenCourseInfoUI* takenCrsInfoWin = new TakenCourseInfoUI(manager, 2, 0, uApp, 0); 
+    TakenCourseInfoUI* takenCrsInfoWin = new TakenCourseInfoUI(manager, 2, 0, uApp, 0, beingViewed); 
     takenCrsInfoWin->show();
     delete this;
   }
@@ -221,11 +252,11 @@ void TACourseInfoUI::on_courseButton(const Glib::ustring& data){
   ta->setDataMembers(termCombo.get_active_text(), yearCombo.get_active_text(), finalCombo.get_active_text());  
   if (uApp != 0) {
     uApp->getTACrsQueue()->pushBack(ta);
-    taCrsInfoWin = new TACourseInfoUI(manager, 2, 0, uApp, 0);
+    taCrsInfoWin = new TACourseInfoUI(manager, 2, 0, uApp, 0, beingViewed);
   }
   else {
     gApp->getTACrsQueue()->pushBack(ta);
-    taCrsInfoWin = new TACourseInfoUI(manager, 2, 1, gApp, 0);
+    taCrsInfoWin = new TACourseInfoUI(manager, 2, 1, gApp, 0, beingViewed);
   }
 
   taCrsInfoWin->show();
@@ -238,9 +269,9 @@ void TACourseInfoUI::on_cancelButton(const Glib::ustring& data){
   SelectEntryUI* selectEntryWin;
 
   if (uApp != 0)
-    selectEntryWin = new SelectEntryUI(manager, 1, 0, uApp->getAppNum(), false);
+    selectEntryWin = new SelectEntryUI(manager, 1, 0, uApp->getAppNum(), beingViewed);
   else 
-    selectEntryWin = new SelectEntryUI(manager, 1, 1, gApp->getAppNum(), false);
+    selectEntryWin = new SelectEntryUI(manager, 1, 1, gApp->getAppNum(), beingViewed);
   selectEntryWin->show();
   delete this;
 }
