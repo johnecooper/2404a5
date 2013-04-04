@@ -33,6 +33,7 @@ class Application {
     void   print() const;
     Application& operator-();
     Application& operator+();
+    string sortValue;
 
   private:
     Course*       course;

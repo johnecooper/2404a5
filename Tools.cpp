@@ -152,3 +152,115 @@ int Tools::validGPA(string aGPA){
   return 1;
 }
 
+/*
+void Tools::sortQueue(Queue * q){
+
+  Node *currNode, *nextNode, *prevNode, *tmpNode;
+  UGradApp* temp;
+
+  if (q.head == 0) {
+    cout << "There are no nodes to sort" << endl;
+    return;
+  }
+  // If there's only one element in the list
+  if (q.head->next == 0)
+    return;
+
+  prevNode = 0;
+  currNode = q.head;
+  nextNode = currNode->next;
+
+  bool swap = true;
+  while(swap) {
+    swap = false;
+    while(currNode !=0 && nextNode !=0){
+      if (nextNode->data->getPerson()->geSortField().compare(currNode->data->getPerson()->getSortField())>0) {
+        if(prevNode == 0){
+          tmpNode = currNode;
+          head = nextNode;
+          tmpNode->next = nextNode->next;
+          nextNode->next = tmpNode;
+        }
+        else {
+          tmpNode = currNode;
+          prevNode->next = nextNode;
+          tmpNode->next = nextNode->next;
+          nextNode->next = tmpNode;
+        }
+        swap = true;
+      }
+      prevNode = currNode;
+      currNode = nextNode;
+      nextNode = nextNode->next;
+    }
+    prevNode = 0;
+    currNode = head;
+    nextNode = currNode->next;
+  }
+}
+*/
+/*
+bool Tools::isInQueue(Queue * q, string s){
+  
+  Node* currNode =  q.head;
+
+  if (currNode == 0)
+    return false;
+
+ // Iterate through linked list
+  while(currNode != 0){
+    if(currNode->data->getPerson()->getStuNum() == n) {
+      cout << n << " has an existing application" << endl;
+      return true;
+    }
+    currNode = currNode->next;
+  }
+
+  return false;
+
+}
+*/
+/*
+string Tools:: isAppInQueue(Queue * q, int n){
+  Node* currNode =  q.head;
+
+  if (currNode == 0)
+    return "0";
+
+  // Iterate through linked list
+  while(currNode != 0){
+    if(currNode->data->getAppNum() == n) {
+      if(currNode->data->getStatus() == ASSIGNED)
+        return "ASSIGNED";
+      if(currNode->data->getStatus() == CLOSED)
+        return "CLOSED";
+      return currNode->data->getPerson()->getStuNum();
+    }
+    currNode = currNode->next;
+  }
+  return "0";
+}
+*/
+
+void Tools::closeOtherApps(Queue * q, string stuNum, int appNum) {
+  Node* currNode =  q.head;
+
+  if (currNode == 0)
+    return;
+
+ // Iterate through linked list
+  while(currNode != 0){
+    if(currNode->data->getUndergrad()->getStuNum() == stuNum) {
+      if( currNode->data->getAppNum() != appNum)
+        currNode->data->operator-();
+    }
+    currNode = currNode->next;
+  }
+  return;
+}
+
+
+
+
+
+
