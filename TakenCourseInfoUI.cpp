@@ -140,7 +140,7 @@ void TakenCourseInfoUI::on_backButton(const Glib::ustring& data){
     if (!(uApp->getTakenCrsQueue()->empty()));
       uApp->getTakenCrsQueue()->clear();
     manager->cancelApp();
-    StuAppFormUI* stuFormWin = new StuAppFormUI(manager, 1, 0);
+    StuAppFormUI* stuFormWin = new StuAppFormUI(manager, 1, 0, false);
     stuFormWin->show();
     delete this;
   }
@@ -161,7 +161,7 @@ void TakenCourseInfoUI::on_courseButton(const Glib::ustring& data){
 //////////////////////////////////////////////////////////////////////////
 // Event handler of cancel button
 void TakenCourseInfoUI::on_cancelButton(const Glib::ustring& data){
-  SelectEntryUI* selectEntryWin = new SelectEntryUI(manager, 0, 0, uApp->getAppNum());
+  SelectEntryUI* selectEntryWin = new SelectEntryUI(manager, 0, 0, uApp->getAppNum(), false);
   selectEntryWin->show();
   delete this;
 }
@@ -174,7 +174,7 @@ void TakenCourseInfoUI::on_saveButton(const Glib::ustring& data){
   if (addCrs)
     uApp->getTakenCrsQueue()->pushBack(taken);
 
-  SelectEntryUI* selectEntryWin = new SelectEntryUI(manager, 0, 0, uApp->getAppNum());
+  SelectEntryUI* selectEntryWin = new SelectEntryUI(manager, 0, 0, uApp->getAppNum(), false);
   selectEntryWin->show();
   delete this;
 }

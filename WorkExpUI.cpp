@@ -320,9 +320,9 @@ void WorkExpUI::on_cancelButton(const Glib::ustring& data){
   SelectEntryUI* selectEntryWin;
 
   if (uApp != 0)
-    selectEntryWin = new SelectEntryUI(manager, 2, 0, uApp->getAppNum());
+    selectEntryWin = new SelectEntryUI(manager, 2, 0, uApp->getAppNum(), false);
   else 
-    selectEntryWin = new SelectEntryUI(manager, 2, 1, gApp->getAppNum());
+    selectEntryWin = new SelectEntryUI(manager, 2, 1, gApp->getAppNum(), false);
   selectEntryWin->show();
   delete this;
 }
@@ -350,12 +350,12 @@ void WorkExpUI::on_saveButton(const Glib::ustring& data){
   if (uApp != 0) {
     if (addWork)
       uApp->getWorkExpQueue()->pushBack(work);
-    selectEntryWin = new SelectEntryUI(manager, 2, 0, uApp->getAppNum());
+    selectEntryWin = new SelectEntryUI(manager, 2, 0, uApp->getAppNum(), false);
   }
   else {
     if (addWork)
       gApp->getWorkExpQueue()->pushBack(work);
-    selectEntryWin = new SelectEntryUI(manager, 2, 1, gApp->getAppNum());
+    selectEntryWin = new SelectEntryUI(manager, 2, 1, gApp->getAppNum(), false);
   } 
 
   selectEntryWin->show();

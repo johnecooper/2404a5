@@ -33,6 +33,7 @@ class StuNumUI : public Gtk::Window {
 
     // 0 = Student
     // 1 = Admin
+    // 2 = Admin Viewing
     int userType;
 
     UGradApp* tempUApp;

@@ -35,7 +35,9 @@ AdminOptionUI::AdminOptionUI(Manager* aManager)
 
   aCombo.append("By application number");
   aCombo.append("By applicants student number");
-  aCombo.append("By applicants name");
+  aCombo.append("By applicants first name");
+  aCombo.append("By applicants last name");
+  aCombo.append("By applicants full name");
 
   bCombo.append("View a summary of pending applications for ONE course");
   bCombo.append("View a summary of pending applications for ALL courses");
@@ -107,6 +109,29 @@ void AdminOptionUI::on_nextButton(const Glib::ustring& data){
     StuNumUI* stuNumWin = new StuNumUI(manager, 3, 1);
     stuNumWin->show();
   }
+  else if(adminCombo.get_active_text() == "View an application"){
+   // cout<<aCombo.get_active_text()<<endl;
+    if(aCombo.get_active_text() == "By application number"){
+StuNumUI* stuNumWin = new StuNumUI(manager, 3, 2);
+      stuNumWin->show(); 
+    }
+    else if(aCombo.get_active_text() == "By applicants student number"){
+      StuNumUI* stuNumWin = new StuNumUI(manager, 3, 3);
+      stuNumWin->show();   
+    }
+    else if(aCombo.get_active_text() == "By applicants first name"){
+StuNumUI* stuNumWin = new StuNumUI(manager, 3, 4);
+      stuNumWin->show(); 
+    }
+    else if(aCombo.get_active_text() == "By applicants last name"){
+StuNumUI* stuNumWin = new StuNumUI(manager, 3, 5);
+      stuNumWin->show(); 
+    }
+    else if(aCombo.get_active_text() == "By applicants full name"){
+StuNumUI* stuNumWin = new StuNumUI(manager, 3, 6);
+      stuNumWin->show(); 
+    } 
+}
   delete this;
 }
 

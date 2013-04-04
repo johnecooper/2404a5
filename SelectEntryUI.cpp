@@ -18,7 +18,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // Default constructor
-SelectEntryUI::SelectEntryUI(Manager* aManager, int entity, int type, int app)
+SelectEntryUI::SelectEntryUI(Manager* aManager, int entity, int type, int app, bool aBeingViewed)
 : aTable(3, 4, false),
   aLabel("Please select an entry you would like to edit, or click \"Add\" to add a new entry"),
   removeButton("Remove"),
@@ -33,6 +33,7 @@ SelectEntryUI::SelectEntryUI(Manager* aManager, int entity, int type, int app)
   entityType = entity; 
   stuType    = type; 
   appNum     = app;
+  beingViewed = aBeingViewed;
 
   set_default_size(500, 250);
   set_title("cuTAES");
@@ -153,7 +154,7 @@ void SelectEntryUI::on_removeButton(const Glib::ustring& data){
       break;
   }
 
-  SelectEntryUI* selectEntryWin = new SelectEntryUI(manager, entityType, stuType, appNum);
+  SelectEntryUI* selectEntryWin = new SelectEntryUI(manager, entityType, stuType, appNum, beingViewed);
   selectEntryWin->show();
   delete this;
 }
@@ -278,7 +279,7 @@ void SelectEntryUI::on_editButton(const Glib::ustring& data){
 //////////////////////////////////////////////////////////////////////////
 // Event handler for the done button
 void SelectEntryUI::on_doneButton(const Glib::ustring& data){
-  SelectEditUI* selectEditWin = new SelectEditUI(manager, stuType, appNum);
+  SelectEditUI* selectEditWin = new SelectEditUI(manager, stuType, appNum, beingViewed);
   selectEditWin->show();
   delete this;
 }

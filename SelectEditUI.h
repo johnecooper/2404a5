@@ -13,7 +13,7 @@
 
 class SelectEditUI : public Gtk::Window {
   public:
-    SelectEditUI(Manager*, int, int);
+    SelectEditUI(Manager*, int, int, bool);
     ~SelectEditUI();
 
     Manager* manager;
@@ -35,8 +35,10 @@ class SelectEditUI : public Gtk::Window {
     // 0 = UGrad 
     // 1 = Grad
     int stuType; 
+    int beingViewedStuType;
 
     int       appNum;
+    bool beingViewed;
     UGradApp* uApp;
     GradApp*  gApp;
 };

@@ -11,7 +11,7 @@
 
 class SelectEntryUI : public Gtk::Window {
   public:
-    SelectEntryUI(Manager*, int, int, int);
+    SelectEntryUI(Manager*, int, int, int, bool);
     ~SelectEntryUI();
 
     Manager* manager;
@@ -37,7 +37,7 @@ class SelectEntryUI : public Gtk::Window {
     // 0 = UGrad
     // 1 = Grad
     int stuType;    
-
+    bool beingViewed;
     int       appNum;
     UGradApp* uApp;
     GradApp*  gApp;

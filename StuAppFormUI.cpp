@@ -16,7 +16,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // Default constructor
-StuAppFormUI::StuAppFormUI(Manager* aManager, int prev, UGradApp* uApp) 
+StuAppFormUI::StuAppFormUI(Manager* aManager, int prev, UGradApp* uApp, bool aBeingViewed) 
 : appTable(11, 3, false),
   label("Please enter your information: "),
   nextButton("Next"),
@@ -24,6 +24,9 @@ StuAppFormUI::StuAppFormUI(Manager* aManager, int prev, UGradApp* uApp)
   cancelButton("Cancel"),
   saveButton("Save")
 {
+ 
+ // stuNumEntry.set_editable(false);
+  emailCombo.set_focus_on_click(false);
   manager = aManager;
   prevWin = prev; 
   if (uApp) // If an application was passed in, assign it to app
@@ -33,7 +36,8 @@ StuAppFormUI::StuAppFormUI(Manager* aManager, int prev, UGradApp* uApp)
     app = manager->getCurrUGradApp();
   }
   int i=0, count=0;
-
+  beingViewed = aBeingViewed; 
+ 
   set_default_size(700, 475);
   set_title("cuTAES");
   set_position(Gtk::WIN_POS_CENTER_ALWAYS);
@@ -260,7 +264,7 @@ void StuAppFormUI::on_nextButton(const Glib::ustring& data) {
 //////////////////////////////////////////////////////////////////////////
 // Event handler for cancel button
 void StuAppFormUI::on_cancelButton(const Glib::ustring& data) {
-  SelectEditUI* selectEditWin = new SelectEditUI(manager, 0, app->getAppNum());
+  SelectEditUI* selectEditWin = new SelectEditUI(manager, 0, app->getAppNum(),beingViewed);
   selectEditWin->show();
   delete this;
 }
@@ -278,7 +282,7 @@ void StuAppFormUI::on_saveButton(const Glib::ustring& data) {
                             Tools::stringToFloat(cgpaEntry.get_text()),
                             Tools::stringToFloat(mgpaEntry.get_text()) );
 
-    SelectEditUI* selectEditWin = new SelectEditUI(manager, 0, app->getAppNum());
+    SelectEditUI* selectEditWin = new SelectEditUI(manager, 0, app->getAppNum(),beingViewed);
     selectEditWin->show();
     delete this;
   }

@@ -66,12 +66,12 @@ void StuOptionUI::on_backButton(const Glib::ustring& data){
 // Event handler for the create button
 void StuOptionUI::on_createButton(const Glib::ustring& data){
   if (m_Combo.get_active_text() == "Undergraduate"){
-    StuAppFormUI* stuFormWin = new StuAppFormUI(manager, 0, 0);
+    StuAppFormUI* stuFormWin = new StuAppFormUI(manager, 0, 0, false);
     stuFormWin->show();  
     delete this;
   }
   else if (m_Combo.get_active_text() == "Graduate"){
-    GradAppFormUI* gradFormWin = new GradAppFormUI(manager, 0, 0);
+    GradAppFormUI* gradFormWin = new GradAppFormUI(manager, 0, 0, false);
     gradFormWin->show();  
     delete this;
   }

@@ -93,12 +93,12 @@ void SubmitAppUI::on_closeButton(const Glib::ustring& data){
 void SubmitAppUI::on_createButton(const Glib::ustring& data){
   if (manager->getCurrUGradApp() != 0) {
     manager->changeUAppMem();  
-    StuAppFormUI* stuFormWin = new StuAppFormUI(manager, 3, manager->getCurrUGradApp());
+    StuAppFormUI* stuFormWin = new StuAppFormUI(manager, 3, manager->getCurrUGradApp(), false);
     stuFormWin->show();  
   } 
   else {
     manager->changeGAppMem();  
-    GradAppFormUI* gradFormWin = new GradAppFormUI(manager, 3, manager->getCurrGradApp());
+    GradAppFormUI* gradFormWin = new GradAppFormUI(manager, 3, manager->getCurrGradApp(), false);
     gradFormWin->show();  
   }
   delete this;

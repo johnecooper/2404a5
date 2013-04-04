@@ -11,7 +11,7 @@
 
 class StuAppFormUI : public Gtk::Dialog {
   public:
-    StuAppFormUI(Manager*, int, UGradApp*);
+    StuAppFormUI(Manager*, int, UGradApp*, bool);
     ~StuAppFormUI();
 
     Manager*  manager;
@@ -39,7 +39,7 @@ class StuAppFormUI : public Gtk::Dialog {
     // 2 = SelectEditUI
     // 3 = SubmitAppUI
     int prevWin; 
-
+    bool beingViewed;
     UGradApp* app;
 };
 

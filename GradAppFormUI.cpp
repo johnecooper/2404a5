@@ -15,7 +15,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 // Default constructor
-GradAppFormUI::GradAppFormUI(Manager* aManager, int prev, GradApp* gApp) 
+GradAppFormUI::GradAppFormUI(Manager* aManager, int prev, GradApp* gApp, bool aBeingViewed) 
 : appTable(11, 3, false),
   label("Please enter your information: "),
   m_rb1("MCS"),
@@ -27,6 +27,7 @@ GradAppFormUI::GradAppFormUI(Manager* aManager, int prev, GradApp* gApp)
 {
   manager = aManager;
   prevWin = prev; 
+  beingViewed = aBeingViewed;
   if (gApp) // If an application was passed in, assign it to app
     app = gApp;
   else {    // Else make a new application
@@ -290,7 +291,7 @@ void GradAppFormUI::on_nextButton(const Glib::ustring& data) {
 //////////////////////////////////////////////////////////////////////////
 // Event handler for cancel button
 void GradAppFormUI::on_cancelButton(const Glib::ustring& data) {
-  SelectEditUI* selectEditWin = new SelectEditUI(manager, 1, app->getAppNum());
+  SelectEditUI* selectEditWin = new SelectEditUI(manager, 1, app->getAppNum(),beingViewed);
   selectEditWin->show();
   delete this;
 }
@@ -313,7 +314,7 @@ void GradAppFormUI::on_saveButton(const Glib::ustring& data) {
                             program,
                             superCombo.get_active_text() );
 
-    SelectEditUI* selectEditWin = new SelectEditUI(manager, 1, app->getAppNum());
+    SelectEditUI* selectEditWin = new SelectEditUI(manager, 1, app->getAppNum(), beingViewed);
     selectEditWin->show();
     delete this;
   }

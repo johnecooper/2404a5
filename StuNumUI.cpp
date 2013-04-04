@@ -29,10 +29,15 @@ StuNumUI::StuNumUI(Manager* aManager, int type, int user)
   set_deletable(false);
 
   add(aTable);
-
-  if (userType == 0)
-    aLabel.set_label("Please enter your student number");
-  else aLabel.set_label("Please enter the student's application number");
+  switch (userType){
+    case 0: aLabel.set_label("Please enter your student number"); break;
+    case 1: aLabel.set_label("Please enter the student's application number");break;
+    case 2: aLabel.set_label("Please enter the student's application number");break;
+    case 3: aLabel.set_label("Please enter the student's student number");break;
+    case 4: aLabel.set_label("Please enter the student's first name");break;
+    case 5: aLabel.set_label("Please enter the student's last name");break;
+    case 6: aLabel.set_label("Please enter the student's full name");break;
+  }
 
   aTable.attach(aLabel, 0, 2, 0, 1,Gtk::FILL,Gtk::FILL,0,10);
   aTable.attach(entry, 0, 2 , 1, 2,Gtk::EXPAND,Gtk::FILL,80,10);
@@ -77,15 +82,16 @@ void StuNumUI::on_nextButton(const Glib::ustring& data){
          temp = Tools::stringToInt(entry.get_text());
   string stuNum, inUQueue, inGQueue;
 
-  // If the entry is empty or is invalid
-  if ((entry.get_text()).find_first_not_of(' ')  == string::npos || Tools::validStuNum==0) {
-    dialog.set_secondary_text("Please enter a valid student number."); 
-    dialog.run();
-    return;
-  }
+// cout<<"User: "<<userType<<endl; 
 
   // If there is no application with that student number
   if (userType == 0){
+    // If the entry is empty or is invalid
+    if ((entry.get_text()).find_first_not_of(' ')  == string::npos || Tools::validStuNum==0) {
+      dialog.set_secondary_text("Please enter a valid student number."); 
+      dialog.run();
+      return;
+    }
     if (stuType == 0) {
       if (!manager->getUGradApps()->isInQueue(entry.get_text())) {
         dialog.set_secondary_text("There is no such student number found."); 
@@ -101,7 +107,7 @@ void StuNumUI::on_nextButton(const Glib::ustring& data){
       }
     }
 
-    SelectAppUI* selectAppWin = new SelectAppUI(manager, stuType, entry.get_text());
+    SelectAppUI* selectAppWin = new SelectAppUI(manager, stuType, entry.get_text(), false);
     selectAppWin->show();
     delete this;
   }
@@ -109,6 +115,11 @@ void StuNumUI::on_nextButton(const Glib::ustring& data){
   // an error message is given otherwise it assigns the applicant, and closes
   // all other applications with the same student number
   else if (userType == 1){
+    if ((entry.get_text()).find_first_not_of(' ')  == string::npos || Tools::validStuNum==0) {
+      dialog.set_secondary_text("Please enter a valid application number."); 
+      dialog.run();
+      return;
+    }
     inUQueue = manager->getUGradApps()->isAppNumInQueue(temp);
     inGQueue = manager->getGradApps()->isAppNumInQueue(temp);
     if(inUQueue != "0"){
@@ -145,6 +156,13 @@ void StuNumUI::on_nextButton(const Glib::ustring& data){
       return;
     }
     dialog2.run();
+  }
+  //If userType is > 1 than it is an admin viewing session. User type designates the type of input, so the application picker can interperate it.
+ 
+  else{
+    SelectAppUI* selectAppWin = new SelectAppUI(manager, userType, entry.get_text(), true);
+    selectAppWin->show();
+    delete this;
   }
 }
 

@@ -199,7 +199,7 @@ void TACourseInfoUI::on_backButton(const Glib::ustring& data){
     if (!(gApp->getTACrsQueue()->empty()));
       gApp->getTACrsQueue()->clear();
     manager->cancelApp();
-    GradAppFormUI* gradFormWin = new GradAppFormUI(manager, 1, 0);
+    GradAppFormUI* gradFormWin = new GradAppFormUI(manager, 1, 0, false);
     gradFormWin->show();
     delete this;
   }
@@ -238,9 +238,9 @@ void TACourseInfoUI::on_cancelButton(const Glib::ustring& data){
   SelectEntryUI* selectEntryWin;
 
   if (uApp != 0)
-    selectEntryWin = new SelectEntryUI(manager, 1, 0, uApp->getAppNum());
+    selectEntryWin = new SelectEntryUI(manager, 1, 0, uApp->getAppNum(), false);
   else 
-    selectEntryWin = new SelectEntryUI(manager, 1, 1, gApp->getAppNum());
+    selectEntryWin = new SelectEntryUI(manager, 1, 1, gApp->getAppNum(), false);
   selectEntryWin->show();
   delete this;
 }
@@ -263,12 +263,12 @@ void TACourseInfoUI::on_saveButton(const Glib::ustring& data){
   if (uApp != 0) {
     if (addCrs)
       uApp->getTACrsQueue()->pushBack(ta);
-    selectEntryWin = new SelectEntryUI(manager, 1, 0, uApp->getAppNum());
+    selectEntryWin = new SelectEntryUI(manager, 1, 0, uApp->getAppNum(), false);
   }
   else {
     if (addCrs) 
       gApp->getTACrsQueue()->pushBack(ta);
-    selectEntryWin = new SelectEntryUI(manager, 1, 1, gApp->getAppNum());
+    selectEntryWin = new SelectEntryUI(manager, 1, 1, gApp->getAppNum(), false);
   } 
 
   selectEntryWin->show();

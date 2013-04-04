@@ -14,10 +14,11 @@
 #include "StuAppFormUI.h"
 #include "GradAppFormUI.h"
 #include "SelectEntryUI.h"
+#include "StuNumUI.h"
 
 //////////////////////////////////////////////////////////////////////////
 // Default constructor
-SelectEditUI::SelectEditUI(Manager* aManager, int type, int app) 
+SelectEditUI::SelectEditUI(Manager* aManager, int type, int app, bool aBeingViewed) 
 : aTable(11, 6, false),
   title("Please select a section to edit"),
   l1("General Information:", 0, 1, false),
@@ -36,13 +37,17 @@ SelectEditUI::SelectEditUI(Manager* aManager, int type, int app)
   manager = aManager;
   stuType = type;
   appNum  = app;
+  beingViewed = aBeingViewed;
 
   set_default_size(500, 700);
   set_title("cuTAES");
   set_modal(true);
   set_position(Gtk::WIN_POS_CENTER_ALWAYS);
   set_deletable(false);
-
+  beingViewedStuType = stuType;
+  if(beingViewed){
+    stuType = 0;
+  }
   if (stuType == 0) {
     uApp = manager->getUGradApps()->getApp(appNum);
     appInfo.set_text("Application #" + Tools::intToString(appNum) + " for " + uApp->getCourse()->getName());
@@ -111,14 +116,19 @@ void SelectEditUI::on_cancelButton(const Glib::ustring& data){
 ////////////////////////////////////////////////////////////////////////// 
 // Event handler for the done button
 void SelectEditUI::on_doneButton(const Glib::ustring& data) {
+if(beingViewed){
+ StuNumUI * stuNumWin = new StuNumUI(manager, 0,beingViewedStuType); 
+  stuNumWin->show();
+}
+else{
   SelectAppUI* selectAppWin;
-
   if (stuType == 0)
-    selectAppWin = new SelectAppUI(manager, stuType, uApp->getUndergrad()->getStuNum());
+    selectAppWin = new SelectAppUI(manager, beingViewedStuType, uApp->getUndergrad()->getStuNum(),false);
   else
-    selectAppWin = new SelectAppUI(manager, stuType, gApp->getGrad()->getStuNum());
+    selectAppWin = new SelectAppUI(manager, beingViewedStuType, gApp->getGrad()->getStuNum(), false);
 
   selectAppWin->show();
+}
   delete this;
 }
 
@@ -126,12 +136,12 @@ void SelectEditUI::on_doneButton(const Glib::ustring& data) {
 // Event handlers for the edit Gen Info button
 void SelectEditUI::on_editInfoButton(const Glib::ustring& data) {
   if (stuType == 0) {
-    StuAppFormUI* stuFormWin = new StuAppFormUI(manager, 2, uApp);
+    StuAppFormUI* stuFormWin = new StuAppFormUI(manager, 2, uApp,beingViewed);
     stuFormWin->show();  
     delete this;
   }
   else {
-    GradAppFormUI* gradFormWin = new GradAppFormUI(manager, 2, gApp);
+    GradAppFormUI* gradFormWin = new GradAppFormUI(manager, 2, gApp, beingViewed);
     gradFormWin->show();  
     delete this;
   }
@@ -143,11 +153,11 @@ void SelectEditUI::on_editEntryButton(const Glib::ustring& data) {
   SelectEntryUI* selectEntryWin;
   
   if (data =="taken")
-    selectEntryWin = new SelectEntryUI(manager, 0, stuType, appNum);
+    selectEntryWin = new SelectEntryUI(manager, 0, beingViewedStuType, appNum, beingViewed);
   else if (data == "ta")
-    selectEntryWin = new SelectEntryUI(manager, 1, stuType, appNum);
+    selectEntryWin = new SelectEntryUI(manager, 1, beingViewedStuType, appNum, beingViewed);
   else
-    selectEntryWin = new SelectEntryUI(manager, 2, stuType, appNum);
+    selectEntryWin = new SelectEntryUI(manager, 2, beingViewedStuType, appNum, beingViewed);
 
   selectEntryWin->show();
   delete this;

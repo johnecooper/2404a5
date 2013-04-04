@@ -10,7 +10,7 @@
 
 class SelectAppUI : public Gtk::Window {
   public:
-    SelectAppUI(Manager*, int, string);
+    SelectAppUI(Manager*, int, string, bool);
     ~SelectAppUI();
 
     Manager* manager;
@@ -29,7 +29,7 @@ class SelectAppUI : public Gtk::Window {
     // 0 = UGrad; 
     // 1 = Grad;
     int    stuType; 
-
+    bool   beingViewed;
     string stuNum;
 };
 
