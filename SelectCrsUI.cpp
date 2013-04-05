@@ -30,7 +30,7 @@ SelectCrsUI::SelectCrsUI(Manager* aManager, int i)
   add(createTable);
     
   // Iterate through course queue and put names into comboBox
-  CourseQueue::Node* currNode = manager->getCourseQueue()->front();
+  CourseQueue<Course>::Node* currNode = manager->getCourseQueue()->front();
 
   while (currNode != 0){ 
     m_Combo.append(currNode->data->getName());

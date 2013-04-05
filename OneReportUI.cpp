@@ -59,7 +59,7 @@ void OneReportUI::on_cancelButton(const Glib::ustring& data){
 void OneReportUI::fillSummary(int status) {
    int i=0;
    // Find course selected in course queue
-  CourseQueue::Node* currCrs = manager->getCourseQueue()->front();
+  CourseQueue<Course>::Node* currCrs = manager->getCourseQueue()->front();
 
   while(currCrs != 0){
     if (currCrs->data->getName() == course)

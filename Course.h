@@ -21,6 +21,7 @@ class Course {
     void           setName(string);
     void           setTerm(string);
     void           setYear(string);
+    bool	   operator!=(Course*);
     UGradAppQueue* getUGradApps();
     GradAppQueue*  getGradApps();
 

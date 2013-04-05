@@ -29,7 +29,7 @@ Manager::Manager()
   currGradApp(0),
   allUGradApps(new UGradAppQueue()),
   allGradApps(new GradAppQueue()),
-  allCourses(new CourseQueue()),
+  allCourses(new CourseQueue<Course>()),
   allUGradInfo(new UGradInfoQueue()),
   allGradInfo(new GradInfoQueue())
 {
@@ -103,7 +103,7 @@ Manager::~Manager() {
 
 //////////////////////////////////////////////////////////////////////////
 // Get Functions
-CourseQueue*       Manager::getCourseQueue()   { return allCourses;    }
+CourseQueue<Course>*       Manager::getCourseQueue()   { return allCourses;    }
 GradAppQueue*      Manager::getGradApps()      { return allGradApps;   }
 UGradAppQueue*     Manager::getUGradApps()     { return allUGradApps;  }
 GradInfoQueue*     Manager::getGradInfo()      { return allGradInfo;   }
@@ -195,7 +195,7 @@ void Manager::cancelApp() {
 //   and in the course object
 void Manager::saveApp() {
   // Find course selected in course queue
-  CourseQueue::Node* currCrs = allCourses->front();
+  CourseQueue<Course>::Node* currCrs = allCourses->front();
 
   // If it is a UGradApp
   if (currUGradApp) {
@@ -231,7 +231,7 @@ void Manager::saveApp() {
 //////////////////////////////////////////////////////////////////////////
 // Sets the course pointer in UGradApp to a course in the CourseQueue
 void Manager::setCourse(UGradApp* app, string course) {
-  CourseQueue::Node* currNode = allCourses->front();
+  CourseQueue<Course>::Node* currNode = allCourses->front();
   while (currNode != 0) {
     if (currNode->data->getName() == course) { 
       app->setCourse(currNode->data);
@@ -244,7 +244,7 @@ void Manager::setCourse(UGradApp* app, string course) {
 //////////////////////////////////////////////////////////////////////////
 // Sets the course pointer in GradApp to a course in the CourseQueue
 void Manager::setCourse(GradApp* app, string course) {
-  CourseQueue::Node* currNode = allCourses->front();
+  CourseQueue<Course>::Node* currNode = allCourses->front();
   while (currNode != 0) {
     if (currNode->data->getName() == course) { 
       app->setCourse(currNode->data);
@@ -327,7 +327,7 @@ void Manager::overwriteInfo(GradApp* app, string fn, string sn, string em,
 //   This is done for both Undergrad and Grad Applications
 void Manager::assembleQueues() {
   int crsQueueSize;
-  CourseQueue::Node* currNode;
+  CourseQueue<Course>::Node* currNode;
   string cn, text, t1, t2, t3;
   UGradApp* uApp;
   GradApp* gApp;
@@ -504,7 +504,7 @@ void Manager::saveEverything() {
   ofstream outFile;
 
   // Get course queue
-  CourseQueue::Node* currCrs = allCourses->front();
+  CourseQueue<Course>::Node* currCrs = allCourses->front();
 
   while (currCrs != 0) {
     // UNDERGRADUATE APPLICATIONS
