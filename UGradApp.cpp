@@ -23,6 +23,7 @@ UGradApp::~UGradApp() {
 
 //////////////////////////////////////////////////////////////////////////
 // Get functions
+GenInfo*          UGradApp::getPerson()     const { return undergrad;     }
 Undergraduate*    UGradApp::getUndergrad()     const { return undergrad;     }
 TakenCourseQueue* UGradApp::getTakenCrsQueue() const { return takenCrsQueue; }
 

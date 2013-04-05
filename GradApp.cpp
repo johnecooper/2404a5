@@ -23,7 +23,8 @@ GradApp::~GradApp() {
 
 //////////////////////////////////////////////////////////////////////////
 // Get functions
-Graduate*    GradApp::getGrad() const { return grad; }
+GenInfo*    GradApp::getPerson() const { return grad; }
+Graduate*   GradApp::getGrad() const  { return grad; }
 
 //////////////////////////////////////////////////////////////////////////
 // Set functions

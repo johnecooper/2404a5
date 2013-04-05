@@ -24,7 +24,7 @@ class Graduate : public GenInfo {
     void   setResearch(string);
     void   setSupervisor(string);
     void   setProgram(string);
-
+    string getSearchString();
     string print();
 
   private:

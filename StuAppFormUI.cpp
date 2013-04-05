@@ -258,7 +258,9 @@ void StuAppFormUI::on_nextButton(const Glib::ustring& data) {
       currNode = currNode->next;
     }
 
-    if(prevWin == 0 ||prevWin ==1){
+    if(prevWin == 0 ||prevWin ==1){//
+
+ /////DEL/////
       if (manager->getUGradApps()->isInQueue(stuNumEntry.get_text())){
         Gtk::MessageDialog dialog(*this, "WARNING!", false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_OK_CANCEL);
         dialog.set_secondary_text(
@@ -275,6 +277,18 @@ void StuAppFormUI::on_nextButton(const Glib::ustring& data) {
         return;
       }
     }
+/////ENDRETREP/////
+/*      if (manager->getUGradApps()->isInQueue(stuNumEntry.get_text())){
+        Gtk::MessageDialog dialog(*this, "WARNING!", false, Gtk::MESSAGE_QUESTION, Gtk::BUTTONS_OK_CANCEL);
+        dialog.set_secondary_text(
+        "There are applications in our system with the same student number.\n Are you sure you want to overwrite this info?"); 
+        int result = dialog.run();
+        if(result == -6)
+          return;
+      }
+*/
+/////ENDREP//////
+//???
     manager->setUGradInfo( stuNumEntry.get_text(),
                            nameEntry.get_text(),
                            surnameEntry.get_text(),
