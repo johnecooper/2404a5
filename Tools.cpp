@@ -152,22 +152,22 @@ int Tools::validGPA(string aGPA){
   return 1;
 }
 
-/*
-void Tools::sortQueue(Queue * q){
 
-  Node *currNode, *nextNode, *prevNode, *tmpNode;
+void Tools::sortQueue(CourseQueue<Application> * q){
+
+  CourseQueue<Application>::Node *currNode, *nextNode, *prevNode, *tmpNode;
   UGradApp* temp;
 
-  if (q.head == 0) {
+  if (q->head == 0) {
     cout << "There are no nodes to sort" << endl;
     return;
   }
   // If there's only one element in the list
-  if (q.head->next == 0)
+  if (q->head->next == 0)
     return;
 
   prevNode = 0;
-  currNode = q.head;
+  currNode = q->head;
   nextNode = currNode->next;
 
   bool swap = true;
@@ -179,7 +179,7 @@ void Tools::sortQueue(Queue * q){
       if (nextNode->data->getPerson()->getSearchString()<(currNode->data->getPerson()->getSearchString())) {
    if(prevNode == 0){
           tmpNode = currNode;
-          head = nextNode;
+          q->head = nextNode;
           tmpNode->next = nextNode->next;
           nextNode->next = tmpNode;
         }
@@ -196,23 +196,23 @@ void Tools::sortQueue(Queue * q){
       nextNode = nextNode->next;
     }
     prevNode = 0;
-    currNode = head;
+    currNode = q->head;
     nextNode = currNode->next;
   }
 }
-*/
-/*
-bool Tools::isInQueue(Queue * q, string s){
+
+
+bool Tools::isInQueue(CourseQueue<Application> * q, string s){
   
-  Node* currNode =  q.head;
+  CourseQueue<Application>::Node* currNode =  q->head;
 
   if (currNode == 0)
     return false;
 
  // Iterate through linked list
   while(currNode != 0){
-    if(currNode->data->getPerson()->getStuNum() == n) {
-      cout << n << " has an existing application" << endl;
+    if(currNode->data->getPerson()->getStuNum() == s) {
+      cout << s << " has an existing application" << endl;
       return true;
     }
     currNode = currNode->next;
@@ -221,10 +221,10 @@ bool Tools::isInQueue(Queue * q, string s){
   return false;
 
 }
-*/
-/*
-string Tools:: isAppInQueue(Queue * q, int n){
-  Node* currNode =  q.head;
+
+
+string Tools:: isAppNumInQueue(CourseQueue<Application> * q, int n){
+  CourseQueue<Application>::Node* currNode =  q->head;
 
   if (currNode == 0)
     return "0";
@@ -242,10 +242,10 @@ string Tools:: isAppInQueue(Queue * q, int n){
   }
   return "0";
 }
-*/
-/*
-void Tools::closeOtherApps(Queue * q, string stuNum, int appNum) {
-  Node* currNode =  q.head;
+
+
+void Tools::closeOtherApps(CourseQueue<Application> * q, string stuNum, int appNum) {
+  CourseQueue<Application>::Node* currNode =  q->head;
 
   if (currNode == 0)
     return;
@@ -260,7 +260,7 @@ void Tools::closeOtherApps(Queue * q, string stuNum, int appNum) {
   }
   return;
 }
-*/
+
 
 
 
