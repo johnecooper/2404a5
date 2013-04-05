@@ -10,6 +10,20 @@
 
 template <class T> 
 class CourseQueue {
+  friend ostream& operator<<(ostream& out, CourseQueue<T>& crsQueue) {
+    int index = 0;
+    T* ptr = crsQueue[index++];
+  
+    out << "[";
+
+    while(ptr) {
+      out << " " << *ptr;
+      ptr = crsQueue[index++];
+    }
+    out << " ]" << endl;
+
+    return out;
+  }
 
   
 
@@ -89,7 +103,7 @@ class CourseQueue {
         return head;
       }
 
-    bool remove(string crs){
+    bool remove(T* crs){
       Node* currNode = head;
       Node* prevNode = 0;
 
@@ -99,7 +113,7 @@ class CourseQueue {
       }
 
       while (currNode->next != 0) {
-        if (currNode->data->getName() == crs) { // match found
+        if (!(currNode->data != crs)) { // match found
           if (prevNode == 0)  // First element
             head = currNode->next;
           else               // Middle element
@@ -113,7 +127,7 @@ class CourseQueue {
       }
 
     // Last element
-      if (currNode->data->getName() == crs) {
+      if (!(currNode->data != crs)) {
         if (prevNode == 0)
           head = 0;
         else
@@ -226,7 +240,7 @@ class CourseQueue {
     }
 
     CourseQueue& operator-=(T* crs){
-      remove(crs->getName());
+      remove(crs);
       return *this;
     } 
 
