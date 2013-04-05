@@ -27,7 +27,7 @@ string  TakenCourse::getFinalGrade() { return finalGrade; }
 //////////////////////////////////////////////////////////////////////////
 // Set functions
 void TakenCourse::setCourse(string crs) { 
-  CourseQueue::Node* currNode = manager->getCourseQueue()->front();
+  CourseQueue<Course>::Node* currNode = manager->getCourseQueue()->front();
   while (currNode != 0) {
     if (currNode->data->getName() == crs) { 
       setName(currNode->data->getName());

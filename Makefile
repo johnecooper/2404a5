@@ -1,10 +1,10 @@
-OBJ = AcceptAppUI.o AdminOptionUI.o AllAssignedUI.o AllPendingUI.o AllReportsUI.o Application.o Course.o CourseInfoUI.o CourseQueue.o GenInfo.o GradApp.o GradAppFormUI.o GradAppQueue.o GradInfoQueue.o Graduate.o main.o Manager.o OneAssignedUI.o OnePendingUI.o OneReportUI.o SelectAppUI.o SelectCrsUI.o SelectEditUI.o SelectEntryUI.o StuAppFormUI.o StuNumUI.o StuOptionUI.o SubmitAppUI.o TACourse.o TACourseInfoUI.o TACourseQueue.o TakenCourse.o TakenCourseInfoUI.o TakenCourseQueue.o Tools.o UGradInfoQueue.o UGradApp.o UGradAppQueue.o Undergraduate.o WelcomeUI.o WorkExp.o WorkExpQueue.o WorkExpUI.o
+OBJ = AcceptAppUI.o AdminOptionUI.o AllAssignedUI.o AllPendingUI.o AllReportsUI.o Application.o Course.o CourseInfoUI.o GenInfo.o GradApp.o GradAppFormUI.o GradAppQueue.o GradInfoQueue.o Graduate.o main.o Manager.o OneAssignedUI.o OnePendingUI.o OneReportUI.o SelectAppUI.o SelectCrsUI.o SelectEditUI.o SelectEntryUI.o StuAppFormUI.o StuNumUI.o StuOptionUI.o SubmitAppUI.o TACourse.o TACourseInfoUI.o TACourseQueue.o TakenCourse.o TakenCourseInfoUI.o TakenCourseQueue.o Tools.o UGradInfoQueue.o UGradApp.o UGradAppQueue.o Undergraduate.o WelcomeUI.o WorkExp.o WorkExpQueue.o WorkExpUI.o
 
-CPPFILES = AcceptAppUI.cpp AdminOptionUI.cpp AllAssignedUI.cpp AllPendingUI.cpp AllReportsUI.cpp Application.cpp Course.cpp CourseInfoUI.cpp CourseQueue.cpp GenInfo.cpp GradApp.cpp GradAppFormUI.cpp GradAppQueue.cpp GradInfoQueue.cpp Graduate.cpp main.cpp Manager.cpp OneAssignedUI.cpp OnePendingUI.cpp OneReportUI.cpp SelectAppUI.cpp SelectCrsUI.cpp SelectEditUI.cpp SelectEntryUI.cpp StuAppFormUI.cpp StuNumUI.cpp StuOptionUI.cpp SubmitAppUI.cpp TACourse.cpp TACourseInfoUI.cpp TACourseQueue.cpp TakenCourse.cpp TakenCourseInfoUI.cpp TakenCourseQueue.cpp test.cpp Tools.cpp UGradInfoQueue.cpp UGradApp.cpp UGradAppQueue.cpp Undergraduate.cpp WelcomeUI.cpp WorkExp.cpp WorkExpQueue.cpp WorkExpUI.cpp
+CPPFILES = AcceptAppUI.cpp AdminOptionUI.cpp AllAssignedUI.cpp AllPendingUI.cpp AllReportsUI.cpp Application.cpp Course.cpp CourseInfoUI.cpp GenInfo.cpp GradApp.cpp GradAppFormUI.cpp GradAppQueue.cpp GradInfoQueue.cpp Graduate.cpp main.cpp Manager.cpp OneAssignedUI.cpp OnePendingUI.cpp OneReportUI.cpp SelectAppUI.cpp SelectCrsUI.cpp SelectEditUI.cpp SelectEntryUI.cpp StuAppFormUI.cpp StuNumUI.cpp StuOptionUI.cpp SubmitAppUI.cpp TACourse.cpp TACourseInfoUI.cpp TACourseQueue.cpp TakenCourse.cpp TakenCourseInfoUI.cpp TakenCourseQueue.cpp test.cpp Tools.cpp UGradInfoQueue.cpp UGradApp.cpp UGradAppQueue.cpp Undergraduate.cpp WelcomeUI.cpp WorkExp.cpp WorkExpQueue.cpp WorkExpUI.cpp
 
 TXT = majors.txt lastAppNum.txt courses.txt info.txt date.txt faculty.txt research.txt Applications AppSummaries
 
-OBJ2 = Application.o Course.o CourseQueue.o GenInfo.o GradApp.o GradAppQueue.o GradInfoQueue.o Graduate.o Manager.o TACourse.o TACourseQueue.o TakenCourseQueue.o TakenCourse.o test.o Tools.o UGradInfoQueue.o UGradApp.o UGradAppQueue.o Undergraduate.o WorkExp.o WorkExpQueue.o 
+OBJ2 = Application.o Course.o GenInfo.o GradApp.o GradAppQueue.o GradInfoQueue.o Graduate.o Manager.o TACourse.o TACourseQueue.o TakenCourseQueue.o TakenCourse.o test.o Tools.o UGradInfoQueue.o UGradApp.o UGradAppQueue.o Undergraduate.o WorkExp.o WorkExpQueue.o 
 
 
 
@@ -26,7 +26,7 @@ AllAssignedUI.o: AllAssignedUI.cpp AllAssignedUI.h
 AllPendingUI.o: AllPendingUI.cpp AllPendingUI.h
 		g++ -c AllPendingUI.cpp `pkg-config gtkmm-3.0 --cflags --libs`
 
-AllReportsUI.o: AllReportsUI.cpp AllReportsUI.h
+AllReportsUI.o: AllReportsUI.cpp AllReportsUI.h 
 		g++ -c AllReportsUI.cpp `pkg-config gtkmm-3.0 --cflags --libs`
 
 Application.o:	Application.cpp Application.h
@@ -37,9 +37,6 @@ Course.o:	Course.cpp Course.h
 
 CourseInfoUI.o:	CourseInfoUI.cpp CourseInfoUI.h
 		g++ -c CourseInfoUI.cpp `pkg-config gtkmm-3.0 --cflags --libs`
-
-CourseQueue.o:	CourseQueue.cpp CourseQueue.h
-		g++ -c CourseQueue.cpp 
 
 GenInfo.o:	GenInfo.cpp GenInfo.h
 		g++ -c GenInfo.cpp 
@@ -59,7 +56,7 @@ GradInfoQueue.o:	GradInfoQueue.cpp GradInfoQueue.h
 Graduate.o:	Graduate.cpp Graduate.h
 		g++ -c Graduate.cpp 
 
-main.o:		main.cpp Types.h
+main.o:		main.cpp Types.h CourseQueue.h
 		g++ -c main.cpp `pkg-config gtkmm-3.0 --cflags --libs`
 
 Manager.o:	Manager.cpp Manager.h
