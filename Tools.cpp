@@ -174,8 +174,10 @@ void Tools::sortQueue(Queue * q){
   while(swap) {
     swap = false;
     while(currNode !=0 && nextNode !=0){
-      if (nextNode->data->getPerson()->geSortField().compare(currNode->data->getPerson()->getSortField())>0) {
-        if(prevNode == 0){
+     // if (nextNode->data->getPerson()->geSortField().compare(currNode->data->getPerson()->getSortField())>0) {
+       
+      if (nextNode->data->getPerson()->getSearchString()<(currNode->data->getPerson()->getSearchString())) {
+   if(prevNode == 0){
           tmpNode = currNode;
           head = nextNode;
           tmpNode->next = nextNode->next;
@@ -241,7 +243,7 @@ string Tools:: isAppInQueue(Queue * q, int n){
   return "0";
 }
 */
-
+/*
 void Tools::closeOtherApps(Queue * q, string stuNum, int appNum) {
   Node* currNode =  q.head;
 
@@ -250,7 +252,7 @@ void Tools::closeOtherApps(Queue * q, string stuNum, int appNum) {
 
  // Iterate through linked list
   while(currNode != 0){
-    if(currNode->data->getUndergrad()->getStuNum() == stuNum) {
+    if(currNode->data->getPerson()->getStuNum() == stuNum) {
       if( currNode->data->getAppNum() != appNum)
         currNode->data->operator-();
     }
@@ -258,7 +260,7 @@ void Tools::closeOtherApps(Queue * q, string stuNum, int appNum) {
   }
   return;
 }
-
+*/
 
 
 

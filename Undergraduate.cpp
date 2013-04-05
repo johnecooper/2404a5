@@ -50,3 +50,7 @@ string Undergraduate::print() {
 
   return out;
 }
+
+string Undergraduate::getSearchString(){
+	return Tools::floatToString(majorGPA);
+}

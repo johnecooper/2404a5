@@ -6,6 +6,7 @@
 #define APPLICATION_H
 
 #include "Types.h"
+#include "GenInfo.h"
 
 class Course;
 class TACourseQueue;
@@ -24,6 +25,7 @@ class Application {
     string             getStatusString(Status) const;
     TACourseQueue*     getTACrsQueue()         const;
     WorkExpQueue*      getWorkExpQueue()       const;
+    virtual GenInfo*   getPerson() 	       const = 0;
 
     void   setCourse(Course*);
     void   setStatus(Status);

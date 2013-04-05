@@ -32,3 +32,6 @@ void GenInfo::setStuNum(string num)   { stuNum       = num; }
 void GenInfo::setFirstName(string fn) { firstName    = fn;  }
 void GenInfo::setSurname(string sn)   { surname      = sn;  }
 void GenInfo::setEmail(string em)     { email        = em;  }
+
+///
+string GenInfo::getSearchString(){};

@@ -19,6 +19,7 @@ class Undergraduate : public GenInfo {
    float  getCGPA();
    float  getMGPA();
    UGradAppQueue* getApps();
+   string getSearchString();
 
    void   setMajor(string);
    void   setYear(int);
