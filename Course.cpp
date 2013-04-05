@@ -41,3 +41,11 @@ ostream& operator<<(ostream& out, Course& c) {
   return out;
 }
 
+
+bool Course::operator!=(Course* crs){
+  if(this->getName() == crs->getName())
+    return false;
+  else
+    return true;
+}
+

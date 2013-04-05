@@ -52,7 +52,7 @@ void CourseInfoUI::initialize() {
   add(createTable);
 
   // Fill course combo box
-  CourseQueue::Node* currNode = manager->getCourseQueue()->front();
+  CourseQueue<Course>::Node* currNode = manager->getCourseQueue()->front();
   while (currNode != 0){ 
     courseCombo.append(currNode->data->getName());
     currNode = currNode->next;

@@ -69,7 +69,7 @@ void AllReportsUI::fillSummary(int status) {
   bool added = false;
 
   // Go through all the courses
-  CourseQueue::Node* currCrs = manager->getCourseQueue()->front();
+  CourseQueue<Course>::Node* currCrs = manager->getCourseQueue()->front();
 
   while(currCrs != 0){
     UGradAppQueue* copyU = currCrs->data->getUGradApps();

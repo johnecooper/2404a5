@@ -134,7 +134,7 @@ void TACourseInfoUI::setWidgets(){
     courseCombo.set_active(0);
   }
   else{
-    CourseQueue::Node* currNode = manager->getCourseQueue()->front();
+    CourseQueue<Course>::Node* currNode = manager->getCourseQueue()->front();
     while (currNode != 0){ 
       if (currNode->data->getName() == text) {
         courseCombo.set_active(i);

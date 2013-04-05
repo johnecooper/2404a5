@@ -70,7 +70,7 @@ GradAppFormUI::GradAppFormUI(Manager* aManager, int prev, GradApp* gApp, bool aB
 
   // Courses combo box
   // Iterate through course queue and put names into comboBox
-  CourseQueue::Node* currNode = manager->getCourseQueue()->front();
+  CourseQueue<Course>::Node* currNode = manager->getCourseQueue()->front();
 
   while (currNode != 0){ 
     courseCombo.append(currNode->data->getName());
@@ -266,7 +266,7 @@ void GradAppFormUI::on_backButton(const Glib::ustring& data) {
 // Event handler for next button
 void GradAppFormUI::on_nextButton(const Glib::ustring& data) {
   if (validEntries()) {
-    CourseQueue::Node* currNode = manager->getCourseQueue()->front();
+    CourseQueue<Course>::Node* currNode = manager->getCourseQueue()->front();
     while (currNode != 0) {
       if (currNode->data->getName() == courseCombo.get_active_text()) { 
         app->setCourse(currNode->data);

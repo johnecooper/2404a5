@@ -73,7 +73,7 @@ int main() {
 //////////////////////////////////////////////////////////////////////////
 // Tests the ! which empties the queue
 void testing_not(string courses[]) {
-  CourseQueue queue1;
+  CourseQueue<Courses> queue1;
 
   cout << endl << "----- Testing the ! which empties queue -----" << endl;
 
@@ -90,7 +90,7 @@ void testing_not(string courses[]) {
 //////////////////////////////////////////////////////////////////////////
 // Tests the [] which returns the course pointer at index specified
 void testing_subscript(string courses[]) {
-  CourseQueue queue1;
+  CourseQueue<Courses> queue1;
 
   cout << endl << "----- Testing the [] which returns the course pointer at index -----";
   cout << endl << "----- CASE: In bounds index -----" << endl;
@@ -118,7 +118,7 @@ void testing_subscript(string courses[]) {
 //////////////////////////////////////////////////////////////////////////
 // Tests the += with course pointer passed in
 void testing_plus_equals_ptr(string courses[]) {
-  CourseQueue queue1;
+  CourseQueue<Courses> queue1;
 
   cout << endl << "----- Testing the += for a course pointer -----" << endl;
 
@@ -135,7 +135,7 @@ void testing_plus_equals_ptr(string courses[]) {
 //////////////////////////////////////////////////////////////////////////
 // Tests the += with course queue passed in
 void testing_plus_equals_queue(string courses[]) {
-  CourseQueue queue1, queue2;
+  CourseQueue<Courses> queue1, queue2;
 
   cout << endl << "----- Testing the += for a new queue -----" << endl;
 
@@ -156,7 +156,7 @@ void testing_plus_equals_queue(string courses[]) {
   queue2.clearCopy();
 
   cout << endl << "----- Testing the += for a new queue *CASCADING* -----" << endl;
-  CourseQueue q1, q2, q3;
+  CourseQueue<Courses> q1, q2, q3;
   for (int i=0; i<5; i++) {
     Course* newCourse  = new Course(courses[i]);
     Course* newCourse2 = new Course(courses[i+2]);
@@ -185,7 +185,7 @@ void testing_plus_equals_queue(string courses[]) {
 //////////////////////////////////////////////////////////////////////////
 // Tests the + with course pointer passed in
 void testing_plus_ptr(string courses[]) {
-  CourseQueue queue1;
+  CourseQueue<Courses> queue1;
 
   cout << endl << "----- Testing the + for a course pointer -----" << endl;
 
@@ -197,7 +197,7 @@ void testing_plus_ptr(string courses[]) {
   cout << "Original queue: " << queue1; 
   cout << "Adding course: " << courses[7];
   Course* newCourse = new Course(courses[7]);
-  CourseQueue newQueue;
+  CourseQueue<Courses> newQueue;
 
   newQueue = queue1 + newCourse;
 
@@ -233,7 +233,7 @@ void testing_plus_ptr(string courses[]) {
 //////////////////////////////////////////////////////////////////////////
 // Tests the + with course queue passed in
 void testing_plus_queue(string courses[]) {
-  CourseQueue queue1, queue2;
+  CourseQueue<Courses> queue1, queue2;
 
   cout << endl << "----- Testing the + for a new queue -----" << endl;
 
@@ -247,7 +247,7 @@ void testing_plus_queue(string courses[]) {
   cout << "Queue 1: " << queue1; 
   cout << "Queue 2: " << queue2;
 
-  CourseQueue newQueue;
+  CourseQueue<Courses> newQueue;
   newQueue = queue1 + queue2;
 
   cout << "New queue: " << newQueue;
@@ -256,7 +256,7 @@ void testing_plus_queue(string courses[]) {
   queue2.clearCopy();
 
   cout << endl << "----- Testing the + for a new queue *CASCADING* -----" << endl;
-  CourseQueue q1, q2, q3;
+  CourseQueue<Courses> q1, q2, q3;
   for (int i=0; i<5; i++) {
     Course* newCourse  = new Course(courses[i]);
     Course* newCourse2 = new Course(courses[i+2]);
@@ -287,7 +287,7 @@ void testing_plus_queue(string courses[]) {
 //////////////////////////////////////////////////////////////////////////
 // Tests the -= with course pointer passed in
 void testing_minus_equals_ptr(string courses[]) {
-  CourseQueue queue1;
+  CourseQueue<Courses> queue1;
 
   cout << endl << "----- Testing the -= for a course pointer -----" << endl;
 
@@ -356,7 +356,7 @@ void testing_minus_equals_ptr(string courses[]) {
 //////////////////////////////////////////////////////////////////////////
 // Tests the -= with course queue passed in
 void testing_minus_equals_queue(string courses[]) {
-  CourseQueue queue1, queue2;
+  CourseQueue<Courses> queue1, queue2;
 
   cout << endl << "----- Testing the -= for a new queue -----";
   cout << endl << "----- CASE: queue1 and queue2 are the same -----" << endl;
@@ -448,7 +448,7 @@ void testing_minus_equals_queue(string courses[]) {
 
 
   cout << endl << "----- Testing the -= for a new queue *CASCADING* -----" << endl;
-  CourseQueue q1, q2, q3;
+  CourseQueue<Courses> q1, q2, q3;
   for (int i=0; i<5; i++) {
     Course* newCourse  = new Course(courses[i]);
     Course* newCourse2 = new Course(courses[i+2]);
@@ -477,7 +477,7 @@ void testing_minus_equals_queue(string courses[]) {
 //////////////////////////////////////////////////////////////////////////
 // Tests the - with course pointer passed in
 void testing_minus_ptr(string courses[]) {
-  CourseQueue queue1;
+  CourseQueue<Courses> queue1;
 
   cout << endl << "----- Testing the - for a course pointer -----";
   cout << endl << "----- CASE: empty list -----" << endl;
@@ -485,7 +485,7 @@ void testing_minus_ptr(string courses[]) {
   cout << "Original queue: " << queue1; 
   cout << "Removing course: " << courses[1] << endl;
   Course* newCourse = new Course(courses[1]);
-  CourseQueue newQueue;
+  CourseQueue<Courses> newQueue;
   newQueue = queue1 - newCourse;
 
   cout << "New queue: " << newQueue;
@@ -584,7 +584,7 @@ void testing_minus_ptr(string courses[]) {
 
 
   cout << endl << "----- Testing the - for a course pointer *CASCADING* -----" << endl;
-  CourseQueue q1;
+  CourseQueue<Courses> q1;
   for (int i=0; i<5; i++) {
     Course* newCourse  = new Course(courses[i]);
     q1 += newCourse;
@@ -617,7 +617,7 @@ void testing_minus_ptr(string courses[]) {
 //////////////////////////////////////////////////////////////////////////
 // Tests the - with course queue passed in
 void testing_minus_queue(string courses[]) {
-  CourseQueue queue1, queue2;
+  CourseQueue<Courses> queue1, queue2;
 
   cout << endl << "----- Testing the - for a new queue -----";
   cout << endl << "----- CASE: queue1 and queue2 are the same -----" << endl;
@@ -631,7 +631,7 @@ void testing_minus_queue(string courses[]) {
   cout << "Queue 1: " << queue1; 
   cout << "Queue 2: " << queue2;
 
-  CourseQueue newQueue;
+  CourseQueue<Courses> newQueue;
   newQueue = queue1 - queue2;
 
   cout << "New queue after removing Queue2 from Queue1 : " << newQueue;
@@ -703,7 +703,7 @@ void testing_minus_queue(string courses[]) {
 
 
   cout << endl << "----- Testing the - for a new queue *CASCADING* -----" << endl;
-  CourseQueue q1, q2, q3;
+  CourseQueue<Courses> q1, q2, q3;
   for (int i=0; i<5; i++) {
     Course* newCourse  = new Course(courses[i]);
     q1 += newCourse;

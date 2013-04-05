@@ -8,23 +8,24 @@
 #include "Types.h"
 #include "Course.h"
 
-template <class T> class CourseQueue {
+template <class T> 
+class CourseQueue {
 
   
 
   public:
-    template <class T> class Node {
+    class Node {
     public:
       T* data;
       Node*   next;
     };
-    template <class T> CourseQueue<T>::CourseQueue() 
+    CourseQueue() 
     : head(0)
     { 
       //cout << "CONSTRUCT CourseQueue" << endl;
     }
 
-    template <class T> CourseQueue<T>::CourseQueue(CourseQueue& oldQueue)
+    CourseQueue(CourseQueue& oldQueue)
     : head(0)
     {
       Node  *currNode = oldQueue.head,
@@ -46,11 +47,11 @@ template <class T> class CourseQueue {
       //cout << "COPY CONSTRUCT CourseQueue" << endl;
     }
 
-    template <class T> CourseQueue<T>::~CourseQueue() {
+    ~CourseQueue() {
       //cout << "DESTRUCT CourseQueue" << endl;
     }
 
-    template <class T> void  CourseQueue<T>::pushBack(T* newCourse){
+    void pushBack(T* newCourse){
       Node* tmpNode = new Node;
       tmpNode->data = newCourse;
       tmpNode->next = 0;
@@ -71,7 +72,7 @@ template <class T> class CourseQueue {
       currNode->next = tmpNode;
     }
 
-    template <class T> bool  CourseQueue<T>::popFront(){
+    bool popFront(){
       Node *currNode; 
 
       if(head == 0)
@@ -84,11 +85,11 @@ template <class T> class CourseQueue {
       return 0;
     }
 
-    template <class T> Node* CourseQueue<T>::front(){
+    Node* front(){
         return head;
       }
 
-    template <class T> bool  CourseQueue<T>::remove(string crs){
+    bool remove(string crs){
       Node* currNode = head;
       Node* prevNode = 0;
 
@@ -126,13 +127,13 @@ template <class T> class CourseQueue {
       return false;
     }
 
-    template <class T> bool  CourseQueue<T>::empty(){
+    bool empty(){
       if (head == 0)
         return true;
       return false;
     }
 
-    template <class T> void  CourseQueue<T>::clear(){
+    void clear(){
       Node *currNode, *nextNode;
 
       if (head == 0)
@@ -150,7 +151,7 @@ template <class T> class CourseQueue {
       head = 0;
     }
 
-    template <class T> void  CourseQueue<T>::clearCopy(){
+    void clearCopy(){
       Node *currNode, *nextNode;
 
       if (head == 0)
@@ -166,7 +167,7 @@ template <class T> class CourseQueue {
       head = 0;
     }
 
-    template <class T> int   CourseQueue<T>::size()  const{
+    int size()  const{
       Node* currNode = head;
       int   count = 0; 
 
@@ -177,10 +178,10 @@ template <class T> class CourseQueue {
       return count;
     }
 
-    template <class T> void  CourseQueue<T>::print() const{
+    void print() const{
     }
 
-    template <class T> T* CourseQueue<T>::operator[](int i) const {
+    T* operator[](int i) const {
       int  count     = 0;
       Node *currNode = head;
 
@@ -194,12 +195,12 @@ template <class T> class CourseQueue {
       return 0;
     }
 
-    template <class T> CourseQueue& CourseQueue<T>::operator+=(T* crs){
+    CourseQueue& operator+=(T* crs){
       pushBack(crs);
       return *this;
     }
  
-    template <class T> CourseQueue& CourseQueue<T>::operator+=(CourseQueue&){
+    CourseQueue& operator+=(CourseQueue& crsQueue){
       Node *currNode = crsQueue.head;
 
       while (currNode != 0) {
@@ -210,19 +211,83 @@ template <class T> class CourseQueue {
       return *this;
     }
 
-    template <class T> CourseQueue  CourseQueue<T>::operator+ (T* crs){
+    CourseQueue operator+ (T* crs){
       CourseQueue newQueue = *this;
       newQueue += crs;
 
       return newQueue;
     }
 
-    template <class T> CourseQueue  CourseQueue<T>::operator+ (CourseQueue&);
-    template <class T> CourseQueue& CourseQueue<T>::operator-=(T*);
-    template <class T> CourseQueue& CourseQueue<T>::operator-=(CourseQueue&);
-    template <class T> CourseQueue  CourseQueue<T>::operator- (T*);
-    template <class T> CourseQueue  CourseQueue<T>::operator- (CourseQueue&);
-    template <class T> void         CourseQueue<T>::operator!();
+    CourseQueue operator+ (CourseQueue& crsQueue){
+      CourseQueue newQueue = (*this);
+      newQueue += crsQueue;
+
+      return newQueue;
+    }
+
+    CourseQueue& operator-=(T* crs){
+      remove(crs->getName());
+      return *this;
+    } 
+
+    CourseQueue& operator-=(CourseQueue& crsQueue){
+      Node *currNode = crsQueue.head;
+  
+      // Finding a crs in empty list
+      if (head == 0) {
+        cout << "There are no nodes to remove" << endl;
+        return *this;
+      }
+
+      while (currNode != 0) {
+        (*this) -= currNode->data;
+        currNode = currNode->next;
+      }
+  
+      return *this;
+    }
+
+    CourseQueue operator- (T* crs){
+      CourseQueue newQueue;
+
+      Node *currNode = head;
+
+      while (currNode != 0) {
+        if (currNode->data != crs)
+          newQueue += currNode-> data;
+        currNode = currNode->next;
+      }
+
+      return newQueue;
+    }
+    
+    CourseQueue operator- (CourseQueue& crsQueue){
+      CourseQueue newQueue;
+
+      bool same = false;
+
+      Node *currNode = head,  *crsNode  = crsQueue.head;
+      while (currNode !=0) { 
+        crsNode = crsQueue.head;
+        same = false; 
+        while(crsNode != 0){
+          if (!(crsNode->data != currNode->data)) {
+             same = true; 
+             break;   
+          }
+          crsNode = crsNode->next; 
+        }
+        if (same == false)
+           newQueue += currNode-> data;
+        currNode = currNode->next;
+      }
+
+      return newQueue; 
+    }
+    
+    void operator!(){
+      clear();
+    }
     Node* head;
 };
 

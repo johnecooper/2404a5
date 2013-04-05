@@ -88,7 +88,7 @@ void TakenCourseInfoUI::setWidgets(){
   int i=0;
 
   text = taken->getName();
-  CourseQueue::Node* currNode = manager->getCourseQueue()->front();
+  CourseQueue<Course>::Node* currNode = manager->getCourseQueue()->front();
   if(beingViewed){
     courseCombo.remove_all();
     courseCombo.append(text);

@@ -13,7 +13,9 @@ class UGradApp;
 class GradApp;
 class UGradAppQueue;
 class GradAppQueue;
+template <class T>
 class CourseQueue;
+class Course;
 
 class Manager {
   friend class AcceptWindow;
@@ -25,7 +27,7 @@ class Manager {
     GradApp*        makeNewGradApp();
     UGradApp*       getCurrUGradApp();
     GradApp*        getCurrGradApp();
-    CourseQueue*    getCourseQueue();
+    CourseQueue<Course>* getCourseQueue();
     UGradAppQueue*  getUGradApps();
     GradAppQueue*   getGradApps();
     UGradInfoQueue* getUGradInfo();
@@ -50,7 +52,7 @@ class Manager {
     int             lastAppNum;
     UGradApp*       currUGradApp;
     GradApp*        currGradApp;
-    CourseQueue*    allCourses;
+    CourseQueue<Course>*    allCourses;
     GradAppQueue*   allGradApps;
     UGradAppQueue*  allUGradApps;
     GradInfoQueue*  allGradInfo;
