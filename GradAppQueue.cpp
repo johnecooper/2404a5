@@ -198,7 +198,7 @@ void GradAppQueue::sortByResearch() {
   while(swap) {  
     swap = false;
     while(currNode !=0 && nextNode !=0){
-      if (nextNode->data->getGrad()->getResearch() < currNode->data->getGrad()->getResearch()) {
+      if (nextNode->data->getPerson()->getSearchString() < currNode->data->getPerson()->getSearchString()) {
         if(prevNode == 0){
           tmpNode = currNode;
           head = nextNode;
@@ -234,7 +234,7 @@ bool GradAppQueue::isInQueue(string n) const{
 
  // Iterate through linked list
   while(currNode != 0){
-    if(currNode->data->getGrad()->getStuNum() == n) {
+    if(currNode->data->getPerson()->getStuNum() == n) {
       cout << n << " has an existing application" << endl;
       return true;
     }
@@ -277,7 +277,7 @@ void GradAppQueue::closeOtherGrad(string stuNum, int appNum) {
 
  // Iterate through linked list
   while(currNode != 0){
-    if(currNode->data->getGrad()->getStuNum() == stuNum) {
+    if(currNode->data->getPerson()->getStuNum() == stuNum) {
       if(currNode->data->getAppNum() != appNum)
         currNode->data->operator-();
     }
