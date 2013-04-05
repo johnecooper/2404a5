@@ -6,6 +6,8 @@
 #define TOOLS_H
 
 #include "Types.h"
+//#include "Queue.h"
+#include "CourseQueue.h"
 
 class Tools {
   public:
@@ -24,6 +26,14 @@ class Tools {
     static int  validEmail(string anEmail);
     static int  validNumber(string aNum);
     static int  validGPA(string aGPA);
+
+    //Queue Functions
+
+    //static void sortQueue(Queue *);
+  //  static bool isInQueue(Queue *, string);
+      //static string isAppNumInQueue(Queue *, int);
+    //static void closeOtherApps(Queue *, string, int);
+   //static Application* getApp(Queue *, int) const;
 };
 
 #endif

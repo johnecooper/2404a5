@@ -17,7 +17,8 @@ class UGradApp : public Application {
     UGradApp();
     ~UGradApp();
 
-    Undergraduate*     getUndergrad()     const;
+    GenInfo*           getPerson()     const;
+    Undergraduate*     getUndergrad() const;
     TakenCourseQueue*  getTakenCrsQueue() const;
 
     void   setUndergrad(Undergraduate*); 

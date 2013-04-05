@@ -46,3 +46,7 @@ string Graduate::print() {
 
   return out;
 }
+
+string Graduate::getSearchString(){
+  return researchArea;
+}

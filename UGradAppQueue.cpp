@@ -233,7 +233,7 @@ bool UGradAppQueue::isInQueue(string n) const{
 
  // Iterate through linked list
   while(currNode != 0){
-    if(currNode->data->getUndergrad()->getStuNum() == n) {
+    if(currNode->data->getPerson()->getStuNum() == n) {
       cout << n << " has an existing application" << endl;
       return true;
     }
@@ -259,7 +259,7 @@ string UGradAppQueue::isAppNumInQueue(int n) {
         return "ASSIGNED";
       if(currNode->data->getStatus() == CLOSED)
         return "CLOSED";
-      return currNode->data->getUndergrad()->getStuNum();
+      return currNode->data->getPerson()->getStuNum();
     }
     currNode = currNode->next;
   }
@@ -278,7 +278,7 @@ void UGradAppQueue::closeOtherUGrad(string stuNum, int appNum) {
 
  // Iterate through linked list
   while(currNode != 0){
-    if(currNode->data->getUndergrad()->getStuNum() == stuNum) {
+    if(currNode->data->getPerson()->getStuNum() == stuNum) {
       if( currNode->data->getAppNum() != appNum)
         currNode->data->operator-();
     }

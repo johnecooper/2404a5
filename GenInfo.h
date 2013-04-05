@@ -16,17 +16,17 @@ class GenInfo {
     string getFirstName();
     string getSurname();
     string getEmail();
+    virtual string getSearchString();
 
     void   setStuNum(string);
     void   setFirstName(string);
     void   setSurname(string);
     void   setEmail(string);
-
   private:
     string stuNum;
     string firstName;
     string surname;
-    string email; 
+    string email;
 };
 
 #endif

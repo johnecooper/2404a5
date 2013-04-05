@@ -7,6 +7,7 @@
 
 #include "Application.h"
 #include "Graduate.h"
+#include "GenInfo.h"
 
 class Application;
 
@@ -15,6 +16,7 @@ class GradApp : public Application {
     GradApp();
     ~GradApp();
 
+    GenInfo*  getPerson() const;
     Graduate* getGrad() const;
     void      setGrad(Graduate*); 
     void      print()   const;
